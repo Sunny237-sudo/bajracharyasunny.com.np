@@ -1,599 +1,1319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sunny Bajracharya | Marketing Manager · AI Automation · GHL Specialist</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #050a0f;
-    --bg2: #080e16;
-    --surface: #0d1a26;
-    --border: #0f2a3f;
-    --cyan: #00e5ff;
-    --green: #00ff9d;
-    --orange: #ff6b35;
-    --text: #c8dde8;
-    --text-dim: #5c7a8a;
-    --mono: 'Share Tech Mono', monospace;
-    --sans: 'Outfit', sans-serif;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sunny Bajracharya — Digital Marketing & AI Automation</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  *, *::before, *::after { box-sizing:border-box;margin:0;padding:0; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;cursor:none; }
+    :root {
+      --bg: #080b10;
+      --bg2: #0d1117;
+      --bg3: #111720;
+      --card: #0f1620;
+      --border: rgba(138, 75, 255, 0.15);
+      --border-hover: rgba(138, 75, 255, 0.4);
+      --purple: #a855f7;
+      --purple-dim: rgba(168, 85, 247, 0.12);
+      --purple-glow: rgba(168, 85, 247, 0.3);
+      --text: #e8eaf0;
+      --text-muted: #7a8394;
+      --text-dim: #4a5568;
+      --font-display: 'Times New Roman', Times, serif;
+      --font-body: 'Times New Roman', Times, serif;
+    }
 
-  .cursor { width:12px;height:12px;background:var(--cyan);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:screen; }
-  .cursor-ring { width:36px;height:36px;border:1px solid var(--cyan);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4; }
+    html { scroll-behavior: smooth; }
 
-  body::before { content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0; }
-  body::after { content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:999; }
-  .glow-orb { position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;top:-200px;left:-200px;transition:transform 1s ease; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.9;
+      cursor: none;
+      overflow-x: hidden;
+    }
 
-  /* NAV */
-  nav { position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(5,10,15,0.97),transparent);backdrop-filter:blur(6px); }
-  .nav-logo { font-family:var(--mono);color:var(--cyan);font-size:0.9rem;letter-spacing:2px; }
-  .nav-links { display:flex;gap:36px;list-style:none; }
-  .nav-links a { font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color 0.2s;position:relative; }
-  .nav-links a::after { content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width 0.3s; }
-  .nav-links a:hover { color:var(--cyan); }
-  .nav-links a:hover::after { width:100%; }
-  .nav-dropdown:hover
+    /* ── CUSTOM CURSOR ── */
+    #cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--purple);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1.5px solid rgba(168, 85, 247, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.12s ease;
+    }
+    body:has(a:hover) #cursor-ring,
+    body:has(button:hover) #cursor-ring {
+      width: 48px; height: 48px;
+      border-color: var(--purple);
+      background: rgba(168, 85, 247, 0.06);
+    }
 
-  /* HERO */
-  #hero {
-    min-height:100vh;
-    position:relative;
-    z-index:1;
-    display:flex;
-    align-items:right;
-    overflow:hidden;
-  }
-  .hero-photo {
-    position:absolute;
-    top:0; left:0; right:0; bottom:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    object-position:center 20%;
-    z-index:0;
-    filter:brightness(0.45) contrast(1.1);
-  }
-  /* Dark gradient overlays for text readability */
-  #hero::before {
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to right, rgba(5,10,15,0.92) 0%, rgba(5,10,15,0.6) 50%, rgba(5,10,15,0.15) 100%);
-    z-index:1;
-  }
-  #hero::after {
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to top, rgba(5,10,15,0.9) 0%, transparent 40%);
-    z-index:1;
-  }
-  .hero-left {
-    position:relative;
-    z-index:2;
-    padding:140px 60px 100px 80px;
-    max-width:720px;
-  }
-  .hero-right { display:none; }
-  .avail-badge {
-    position:absolute;
-    bottom:48px; left:80px;
-    background:rgba(5,10,15,0.75);
-    border:1px solid rgba(0,255,157,0.3);
-    padding:8px 18px;
-    display:flex;align-items:center;gap:8px;
-    font-family:var(--mono);font-size:0.62rem;
-    color:var(--green);letter-spacing:2px;
-    text-transform:uppercase;z-index:2;white-space:nowrap;
-  }
-  .avail-dot { width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite;flex-shrink:0; }
-  /* Cyan glow behind text */
-  .hero-left::before {
-    content:'';
-    position:absolute;
-    top:50%; left:0;
-    transform:translateY(-50%);
-    width:600px; height:600px;
-    background:radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
-    z-index:-1;
-    pointer-events:none;
-  }
-  .hero-tag { font-family:var(--mono);font-size:0.75rem;color:var(--cyan);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fadeUp 0.8s 0.2s forwards; }
-  .hero-name { font-size:clamp(3rem,5.5vw,6rem);font-weight:900;line-height:1;letter-spacing:-2px;margin-bottom:18px;opacity:0;animation:fadeUp 0.8s 0.4s forwards; }
-  .hero-name .accent { color:var(--cyan); }
-  .hero-title { font-family:var(--mono);font-size:clamp(0.65rem,1.1vw,0.85rem);color:var(--text-dim);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp 0.8s 0.6s forwards; }
-  .hero-title .sep { color:var(--cyan);margin:0 10px; }
-  .hero-desc { font-size:1rem;line-height:1.85;color:var(--text-dim);max-width:480px;margin-bottom:36px;opacity:0;animation:fadeUp 0.8s 0.8s forwards; }
-  .hero-btns { display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;opacity:0;animation:fadeUp 0.8s 1s forwards; }
-  .btn-primary { padding:13px 30px;background:var(--cyan);color:var(--bg);font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-weight:700;transition:all 0.2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px)); }
-  .btn-primary:hover { background:var(--green);transform:translateY(-2px); }
-  .btn-outline { padding:13px 30px;border:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all 0.2s; }
-  .btn-outline:hover { border-color:var(--cyan);color:var(--cyan); }
-  .hero-stats { display:flex;gap:36px;opacity:0;animation:fadeUp 0.8s 1.2s forwards; }
-  .stat-num { font-size:2rem;font-weight:900;color:var(--cyan);line-height:1; }
-  .stat-label { font-family:var(--mono);font-size:0.58rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-top:4px; }
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
 
-  /* SECTIONS */
-  section { position:relative;z-index:1;padding:100px 60px; }
-  .section-header { display:flex;align-items:center;gap:20px;margin-bottom:60px; }
-  .section-num { font-family:var(--mono);font-size:0.7rem;color:var(--cyan);letter-spacing:3px; }
-  .section-title { font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-1px; }
-  .section-line { flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent); }
+    /* ── GRID BACKGROUND ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(138, 75, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 75, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  /* 01 ACTIVELY WORKING ON */
-  #active { background:var(--bg2); }
-  .active-intro { font-size:0.95rem;color:var(--text-dim);max-width:600px;line-height:1.8;margin-bottom:56px; }
-  .active-columns { display:grid;grid-template-columns:1fr 1fr;gap:40px; }
-  .country-label { display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border); }
-  .country-flag { font-size:1.4rem; }
-  .country-title { font-family:var(--mono);font-size:0.72rem;color:var(--text);letter-spacing:3px;text-transform:uppercase; }
-  .country-count { font-family:var(--mono);font-size:0.62rem;color:var(--text-dim);letter-spacing:2px;margin-left:auto; }
-  .active-cards { display:flex;flex-direction:column;gap:12px; }
-  .active-card { border:1px solid var(--border);background:var(--surface);padding:22px 24px;text-decoration:none;display:block;position:relative;overflow:hidden;transition:all 0.3s; }
-  .active-card::before { content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--cyan);transform:scaleY(0);transform-origin:bottom;transition:transform 0.3s; }
-  .active-card:hover { border-color:rgba(0,229,255,0.3);transform:translateX(4px); }
-  .active-card:hover::before { transform:scaleY(1); }
-  .active-card-top { display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px; }
-  .active-card-title { font-size:0.92rem;font-weight:700;color:#fff;line-height:1.4;flex:1; }
-  .live-badge { display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:0.58rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;flex-shrink:0;margin-top:2px; }
-  .live-dot { width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.5s infinite; }
-  .active-card-desc { font-size:0.82rem;color:var(--text-dim);line-height:1.65;margin-bottom:14px; }
-  .active-card-footer { display:flex;align-items:center;justify-content:space-between; }
-  .active-card-tag { font-family:var(--mono);font-size:0.6rem;padding:3px 10px;border:1px solid var(--border);color:var(--cyan);letter-spacing:1px;text-transform:uppercase; }
-  .active-card-arrow { font-family:var(--mono);font-size:0.62rem;color:var(--text-dim);letter-spacing:1px;transition:all 0.2s; }
-  .active-card:hover .active-card-arrow { color:var(--cyan); }
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
 
-  /* 02 QUALIFICATIONS */
-  #qualifications { }
-  .qual-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px; }
-  .qual-card { background:var(--surface);padding:32px 28px;position:relative;overflow:hidden;transition:all 0.3s;border:1px solid var(--border); }
-  .qual-card::before { content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--cyan);transform:scaleY(0);transform-origin:bottom;transition:transform 0.3s; }
-  .qual-card:hover { background:#0f1f30;transform:translateY(-4px); }
-  .qual-card:hover::before { transform:scaleY(1); }
-  .qual-icon { font-size:2rem;margin-bottom:14px;display:block; }
-  .qual-name { font-size:1.05rem;font-weight:700;margin-bottom:10px;color:#fff; }
-  .qual-desc { font-size:0.86rem;color:var(--text-dim);line-height:1.7; }
-  .qual-tags { display:flex;flex-wrap:wrap;gap:6px;margin-top:14px; }
-  .tag { font-family:var(--mono);font-size:0.62rem;padding:4px 10px;border:1px solid var(--border);color:var(--cyan);letter-spacing:1px;text-transform:uppercase; }
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 5%;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8, 11, 16, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
 
-  /* 03 PORTFOLIO */
-  #portfolio { background:var(--bg2); }
-  .portfolio-desc { font-size:0.95rem;color:var(--text-dim);max-width:540px;line-height:1.8;margin-bottom:48px; }
-  .portfolio-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px; }
-  .port-card { border:1px solid var(--border);background:var(--surface);overflow:hidden;text-decoration:none;display:block;position:relative;transition:all 0.35s; }
-  .port-card:hover { border-color:rgba(0,229,255,0.35);transform:translateY(-6px); }
-  .port-card-img { height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center; }
-  .port-card-bg { position:absolute;inset:0;transition:transform 0.5s; }
-  .port-card:hover .port-card-bg { transform:scale(1.04); }
-  .bg-video { background:linear-gradient(135deg,#0a1828,#051218,#0a2010); }
-  .bg-content { background:linear-gradient(135deg,#0a1828,#1a1228,#0a0e28); }
-  .bg-adventure { background:linear-gradient(135deg,#0a1828,#1a1010,#201808); }
-  .port-card-icon { font-size:2.8rem;position:relative;z-index:1;filter:drop-shadow(0 0 16px rgba(0,229,255,0.3)); }
-  .port-card-glow { position:absolute;inset:0;opacity:0;transition:opacity 0.3s; }
-  .port-card:hover .port-card-glow { opacity:1; }
-  .glow-video { background:radial-gradient(circle at 50%,rgba(0,229,255,0.08),transparent 65%); }
-  .glow-content { background:radial-gradient(circle at 50%,rgba(150,100,255,0.08),transparent 65%); }
-  .glow-adventure { background:radial-gradient(circle at 50%,rgba(255,107,53,0.08),transparent 65%); }
-  .port-card-body { padding:22px 24px 26px; }
-  .port-card-label { font-family:var(--mono);font-size:0.6rem;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px; }
-  .port-card-title { font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px;letter-spacing:-0.5px; }
-  .port-card-desc { font-size:0.83rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px; }
-  .port-card-arrow { font-family:var(--mono);font-size:0.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:8px;transition:gap 0.2s; }
-  .port-card:hover .port-card-arrow { gap:14px; }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--purple); }
 
-  /* 04 BLOG */
-  #blog { }
-  .blog-intro { font-size:0.95rem;color:var(--text-dim);max-width:600px;line-height:1.8;margin-bottom:56px; }
-  .blog-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px; }
-  .blog-card { border:1px solid var(--border);background:var(--surface);overflow:hidden;text-decoration:none;display:block;position:relative;transition:all 0.3s; }
-  .blog-card:hover { border-color:rgba(0,229,255,0.3);transform:translateY(-5px); }
-  .blog-card-top { height:6px;background:linear-gradient(to right,var(--cyan),var(--green)); }
-  .blog-card-body { padding:28px 28px 24px; }
-  .blog-card-num { font-family:var(--mono);font-size:0.62rem;color:var(--text-dim);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px; }
-  .blog-card-title { font-size:1rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:14px; }
-  .blog-card-desc { font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px; }
-  .blog-card-footer { display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border); }
-  .blog-card-tag { font-family:var(--mono);font-size:0.6rem;padding:3px 10px;border:1px solid var(--border);color:var(--cyan);letter-spacing:1px;text-transform:uppercase; }
-  .coming-soon-pill { font-family:var(--mono);font-size:0.58rem;padding:3px 10px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);color:var(--cyan);letter-spacing:2px;text-transform:uppercase; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
 
-  /* FOOTER */
-  footer {
-    padding: 48px 60px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-  }
-  .footer-socials { display:flex;gap:14px;align-items:center; }
-  .social-link { width:42px;height:42px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.2s;text-decoration:none;color:var(--text-dim); }
-  .social-link:hover { border-color:var(--cyan);color:var(--cyan);transform:translateY(-3px); }
-  .footer-connect {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-  }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 400;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      letter-spacing: 0.2px;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--purple-dim); }
 
-  .reveal { opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease; }
-  .reveal.visible { opacity:1;transform:none; }
+    /* dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after {
+      content: ' ↓';
+      font-size: 10px;
+      opacity: 0.6;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 6px 6px;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+    .dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 0; right: 0;
+      height: 12px;
+    }
+    .nav-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: all;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 9px 14px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .dropdown-menu a:hover { color: var(--purple); background: var(--purple-dim); }
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)} }
-  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
+    /* hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-muted);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
 
-  @media(max-width:900px){
-    .hero-left { padding:120px 40px 80px 40px; }
-    .active-columns { grid-template-columns:1fr; }
-  }
-  @media(max-width:600px){
-    .hero-left { padding:100px 24px 60px 24px; }
-    .hero-name { font-size:2.5rem; }
-    .avail-badge { left:24px;bottom:32px; }
-  }
-  @media(max-width:768px){
-    nav { padding:20px 24px; }
-    .nav-links { display:none; }
-    section { padding:80px 24px; }
-    footer { padding:40px 24px; }
-  }
-  .nav-dropdown { position:relative; }
-  .nav-dropdown > a { cursor:pointer; }
-  .nav-dropdown-menu { position:absolute;top:100%;left:0;padding-top:8px;min-width:220px;opacity:0;visibility:hidden;transition:opacity 0.2s,visibility 0.2s;z-index:500; }
-  .nav-dropdown-menu-inner { background:var(--surface);border:1px solid var(--border); }
-  .nav-dropdown:hover .nav-dropdown-menu { opacity:1;visibility:visible; }
-  .nav-dropdown-menu a { display:block !important;padding:13px 22px !important;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:0.68rem;color:var(--text-dim) !important;text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color 0.2s,background 0.2s,padding-left 0.2s !important;pointer-events:all !important;width:100%; }
-  .nav-dropdown-menu a:last-child { border-bottom:none; }
-  .nav-dropdown-menu a:hover { color:var(--cyan) !important;background:rgba(0,229,255,0.06) !important;padding-left:30px !important; }
-  .nav-dropdown-menu a::after { display:none !important; }
-</style>
+    /* mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 68px 0 0 0;
+      background: var(--bg2);
+      z-index: 999;
+      padding: 30px 5%;
+      flex-direction: column;
+      gap: 4px;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .mobile-nav a:hover { color: var(--purple); background: var(--purple-dim); }
+    .mobile-nav-group { border-left: 2px solid var(--border); margin-left: 16px; padding-left: 0; }
+    .mobile-nav-group a { font-size: 14px; color: var(--text-dim); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 68px 5% 0;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      padding: 60px 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      background: var(--purple-dim);
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--purple);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -2px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .hero-name .highlight { color: var(--purple); }
+
+    .hero-roles {
+      font-family: var(--font-display);
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+    .hero-roles span {
+      color: var(--text);
+    }
+
+    .hero-desc {
+      font-size: 15.5px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--purple);
+      color: #fff;
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: none;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .btn-primary:hover { background: #9333ea; transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      color: var(--text);
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border-hover);
+      cursor: none;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+      position: relative;
+    }
+    .btn-secondary:hover { border-color: var(--purple); color: var(--purple); }
+
+    /* social popup on "Get in Touch" */
+    .social-popup {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    .social-popup.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .social-popup a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14.5px;
+      transition: all 0.2s;
+    }
+    .social-popup a:hover { border-color: var(--purple); color: var(--purple); background: var(--purple-dim); }
+    .social-popup a svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* hero photo */
+    .hero-photo {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-photo-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+    }
+    .hero-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--purple), transparent 60%);
+      z-index: 0;
+    }
+    .hero-photo-wrap img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 18px;
+      display: block;
+      filter: grayscale(10%) contrast(1.05);
+    }
+    .hero-photo-badge {
+      position: absolute;
+      bottom: 24px;
+      left: -20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 18px;
+      z-index: 2;
+      backdrop-filter: blur(10px);
+    }
+    .hero-photo-badge .badge-num {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--purple);
+      line-height: 1;
+    }
+    .hero-photo-badge .badge-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-photo { order: -1; }
+      .hero-photo-wrap { max-width: 300px; }
+      .hero-photo-badge { bottom: 16px; left: -10px; }
+    }
+    @media (max-width: 480px) {
+      .hero-photo-wrap { max-width: 260px; }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 120px 5%;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-tag::before {
+      content: '//';
+      opacity: 0.5;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 15.5px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 56px;
+    }
+
+    /* ── FREELANCE PROJECTS ── */
+    #freelance { background: var(--bg2); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--purple-dim) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-company {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .project-role {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.55;
+    }
+    .project-period {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+    .project-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .project-bullets li {
+      font-size: 15px;
+      color: var(--text-muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.8;
+    }
+    .project-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--purple);
+      font-size: 11px;
+      top: 3px;
+    }
+
+    .project-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+    }
+
+    .project-websites { margin-top: 48px; }
+    .websites-label {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .websites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .website-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      text-decoration: none;
+      transition: all 0.2s;
+      gap: 12px;
+    }
+    .website-item:hover { border-color: var(--border-hover); background: var(--purple-dim); }
+    .website-item-left {}
+    .website-item-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .website-item-desc {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+    .website-item-arrow {
+      color: var(--purple);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── QUALIFICATIONS ── */
+    #qualifications { background: var(--bg); }
+
+    .qual-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 900px) { .qual-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .qual-grid { grid-template-columns: 1fr; } }
+
+    .qual-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .qual-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+    .qual-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), transparent);
+      border-radius: 16px 16px 0 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .qual-card:hover::before { opacity: 1; }
+
+    .qual-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .qual-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .qual-desc {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+    .qual-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .qual-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      background: var(--purple-dim);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--bg2); }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 768px) { .portfolio-grid { grid-template-columns: 1fr; } }
+
+    .portfolio-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .portfolio-card:hover { border-color: var(--border-hover); transform: translateY(-6px); }
+
+    .portfolio-thumb {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-thumb.video { background: linear-gradient(135deg, #0f1a2e, #1a0f2e); }
+    .portfolio-thumb.content { background: linear-gradient(135deg, #0f1a1a, #0f2e1a); }
+    .portfolio-thumb.adventure { background: linear-gradient(135deg, #1a1a0f, #2e1a0f); }
+
+    .portfolio-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(15, 22, 32, 0.8));
+    }
+
+    .portfolio-body { padding: 30px; }
+    .portfolio-cat {
+      font-size: 10.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .portfolio-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .portfolio-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+    .portfolio-link {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── BLOG ── */
+    #blog { background: var(--bg); }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 1100px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      transition: all 0.3s;
+    }
+    .blog-card:nth-child(1)::before { background: #a855f7; }
+    .blog-card:nth-child(2)::before { background: #06b6d4; }
+    .blog-card:nth-child(3)::before { background: #10b981; }
+    .blog-card:nth-child(4)::before { background: #f59e0b; }
+    .blog-card:hover { border-color: var(--border-hover); transform: translateY(-4px); }
+
+    .blog-num {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .blog-cat {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .blog-title {
+      font-family: var(--font-display);
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.85;
+      margin-bottom: 12px;
+      flex-grow: 1;
+    }
+    .blog-excerpt {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+    .blog-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    .blog-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .blog-read-more {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 60px 5% 40px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .footer-social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .footer-social-btn:hover {
+      border-color: var(--purple);
+      color: var(--purple);
+      background: var(--purple-dim);
+      transform: translateY(-3px);
+    }
+    .footer-social-btn svg { width: 18px; height: 18px; fill: currentColor; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .footer-copy span { color: var(--purple); }
+
+  </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="glow-orb" id="glowOrb"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
-<!-- NAV -->
+<!-- ══ NAVIGATION ══ -->
 <nav>
-  <div class="nav-logo">SUNNY BAJRACHARYA</div>
+  <a class="nav-logo" href="index.html">Sunny<span>.</span></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="experience.html">Work Experience</a></li>
     <li class="nav-dropdown">
-      <a href="#">Portfolio &#9660;</a>
-      <div class="nav-dropdown-menu">
-        <div class="nav-dropdown-menu-inner">
-          <a href="content.html">Content Portfolio</a>
-          <a href="video.html">Video Portfolio</a>
-          <a href="adventure.html">Adventure Portfolio</a>
-        </div>
+      <a href="portfolio.html">Portfolio</a>
+      <div class="dropdown-menu">
+        <a href="content.html">Content Portfolio</a>
+        <a href="video.html">Video Portfolio</a>
+        <a href="adventure.html">Adventure Portfolio</a>
       </div>
     </li>
-    
     <li><a href="blog.html">Blogs</a></li>
-    <li><a href="#qualifications">Qualifications & Honours</a></li>
+    <li><a href="qualifications.html">Qualifications &amp; Honours</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
-<div id="hero">
-  <img src="sunny.png" alt="Sunny Bajracharya" class="hero-photo">
-  <div class="hero-left">
-    <p class="hero-tag">// Portfolio — Kathmandu, Nepal</p>
-    <h1 class="hero-name">Hi, I'm <span class="accent">Sunny.</span></h1>
-    <p class="hero-title">Marketing Manager<span class="sep">|</span>AI Automation<span class="sep">|</span>GHL Specialist</p>
-    <p class="hero-desc">From Nepal to the world — I combine AI automation, digital marketing, and GHL to help businesses grow faster.</p>
-    <div class="hero-btns">
-      <a href="#portfolio" class="btn-primary">My Portfolio</a>
-      <a href="#contact" class="btn-outline">Get In Touch</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">9</div>
-        <div class="stat-label">Leads in 9 Days</div>
-      </div>
-      <div>
-        <div class="stat-num">~80%</div>
-        <div class="stat-label">Task Time Saved</div>
-      </div>
-      <div>
-        <div class="stat-num">2×</div>
-        <div class="stat-label">Companies</div>
-      </div>
-    </div>
+<!-- mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Work Experience</a>
+  <a href="portfolio.html" onclick="toggleMobileNav()">Portfolio</a>
+  <div class="mobile-nav-group">
+    <a href="content.html" onclick="toggleMobileNav()">↳ Content Portfolio</a>
+    <a href="video.html" onclick="toggleMobileNav()">↳ Video Portfolio</a>
+    <a href="adventure.html" onclick="toggleMobileNav()">↳ Adventure Portfolio</a>
   </div>
+  <a href="blog.html" onclick="toggleMobileNav()">Blogs</a>
+  <a href="qualifications.html" onclick="toggleMobileNav()">Qualifications &amp; Honours</a>
 </div>
 
-<!-- 01 International Freelancing Projects -->
-<section id="active">
-  <div class="section-header reveal">
-    <span class="section-num">01</span>
-    <h2 class="section-title">Actively Working On</h2>
-    <div class="section-line"></div>
-  </div>
-  <p class="active-intro reveal">Live projects I'm currently executing — from AI automation to full marketing campaigns across two continents.</p>
-  <div class="active-columns">
-    <div class="country-block reveal">
-      <div class="country-label">
-        <span class="country-flag">🇬🇧</span>
-        <span class="country-title">UK Based Company</span>
-        <span class="country-count">3 Projects</span>
-      </div>
-      <div class="active-cards">
-        <a href="#" class="active-card">
-          <div class="active-card-top">
-            <div class="active-card-title">Claude AI Agent Setup & Prompt Engineering</div>
-            <div class="live-badge"><span class="live-dot"></span>Live</div>
-          </div>
-          <div class="active-card-desc">Building and deploying custom Claude AI agents for an accounting firm — cutting hours of manual work to minutes through smart automation and engineered prompts.</div>
-          <div class="active-card-footer">
-            <span class="active-card-tag">AI · Automation</span>
-            <span class="active-card-arrow">View Project →</span>
-          </div>
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag reveal">Based in Nepal · Available Worldwide</div>
+      <h1 class="hero-name reveal reveal-delay-1">Hi, I'm<br><span class="highlight">Sunny</span></h1>
+      <p class="hero-roles reveal reveal-delay-2">
+        <span>VP of PR</span> · <span>Marketing Manager</span> · <span>AI Automation</span> · <span>GHL Specialist</span>
+      </p>
+      <p class="hero-desc reveal reveal-delay-3">
+        From Nepal to the world — I combine AI automation, digital marketing, and GHL to help businesses grow faster.
+      </p>
+      <div class="hero-ctas reveal reveal-delay-4">
+        <a class="btn-primary" href="Sunny Bajracharya may 2026.pdf" download target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 16l4-4m0 0l-4-4m4 4H4M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6"/></svg>
+          Download Resume
         </a>
-        <a href="#" class="active-card">
-          <div class="active-card-top">
-            <div class="active-card-title">Website Design & Development</div>
-            <div class="live-badge"><span class="live-dot"></span>Live</div>
-          </div>
-          <div class="active-card-desc">Designing and building a professional, conversion-focused website for a UK based company — from concept to live launch.</div>
-          <div class="active-card-footer">
-            <span class="active-card-tag">Web · Design</span>
-            <span class="active-card-arrow">View Project →</span>
-          </div>
-        </a>
-        <a href="#" class="active-card">
-          <div class="active-card-top">
-            <div class="active-card-title">Full-Scale Marketing Campaign & Strategy</div>
-            <div class="live-badge"><span class="live-dot"></span>Live</div>
-          </div>
-          <div class="active-card-desc">Developing and executing a complete marketing strategy — customer retention, LTC to CAC referral campaign, win-back campaign, upselling decisions, and financial analysis of P&L and client ledgers.</div>
-          <div class="active-card-footer">
-            <span class="active-card-tag">Marketing · Strategy</span>
-            <span class="active-card-arrow">View Project →</span>
-          </div>
-        </a>
+        <button class="btn-secondary" id="gitBtn" onclick="toggleSocials()">
+          Get in Touch
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="social-popup" id="socialPopup">
+          <!-- WhatsApp -->
+          <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <!-- Email -->
+          <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email">
+            <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+          </a>
+        </div>
       </div>
     </div>
-    <div class="country-block reveal">
-      <div class="country-label">
-        <span class="country-flag">🇺🇸</span>
-        <span class="country-title">US Based Company</span>
-        <span class="country-count">3 Projects</span>
-      </div>
-      <div class="active-cards">
-        <a href="#" class="active-card">
-          <div class="active-card-top">
-            <div class="active-card-title">Marketing Automation & Lead Capture via GHL</div>
-            <div class="live-badge"><span class="live-dot"></span>Live</div>
-          </div>
-          <div class="active-card-desc">Setting up and managing full marketing automation and lead capture pipelines through Go High Level — driving consistent inbound leads on autopilot.</div>
-          <div class="active-card-footer">
-            <span class="active-card-tag">GHL · Lead Gen</span>
-            <span class="active-card-arrow">View Project →</span>
-          </div>
-        </a>
-        <a href="#" class="active-card">
-          <div class="active-card-top">
-            <div class="active-card-title">Content Design & Creation</div>
-            <div class="live-badge"><span class="live-dot"></span>Live</div>
-          </div>
-          <div class="active-card-desc">Creating high-quality visual and written content — ad creatives, social posts, and brand materials designed to engage and convert the target audience.</div>
-          <div class="active-card-footer">
-            <span class="active-card-tag">Content · Design</span>
-            <span class="active-card-arrow">View Project →</span>
-          </div>
-        </a>
-        <a href="#" class="active-card">
-          <div class="active-card-top">
-            <div class="active-card-title">Social Media Pages Management</div>
-            <div class="live-badge"><span class="live-dot"></span>Live</div>
-          </div>
-          <div class="active-card-desc">Managing all social media platforms — strategy, scheduling, engagement, and growth across every channel to build a consistent and strong online presence.</div>
-          <div class="active-card-footer">
-            <span class="active-card-tag">Social · Growth</span>
-            <span class="active-card-arrow">View Project →</span>
-          </div>
-        </a>
+
+    <div class="hero-photo reveal reveal-delay-2">
+      <div class="hero-photo-wrap">
+        <img src="sunny.png" alt="Sunny Bajracharya" />
+        <div class="hero-photo-badge">
+          <div class="badge-num">3+</div>
+          <div class="badge-label">Years Experience</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 02 QUALIFICATIONS -->
+<!-- ══ FREELANCE PROJECTS ══ -->
+<section id="freelance">
+  <div class="section-inner">
+    <p class="section-tag reveal">02 — International Freelance</p>
+    <h2 class="section-title reveal reveal-delay-1">International Freelance Projects</h2>
+    <p class="section-desc reveal reveal-delay-2">Real work, real results — campaigns, automation, and websites built for global clients.</p>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal reveal-delay-1">
+        <p class="project-company">laliguras.de · German Based</p>
+        <h3 class="project-role">Digital Marketing Consultant</h3>
+        <p class="project-period">April 2026</p>
+        <ul class="project-bullets">
+          <li>Drove 70+ organic user signups within 1 month</li>
+          <li>Achieved #1 ranking in platform referral program</li>
+          <li>Proposed Facebook Ads campaign to drive website traffic</li>
+          <li>Proposed influencer + journalist hiking campaign to boost brand visibility in Nepal</li>
+          <li>Developed comprehensive digital marketing strategy including Google Ads roadmap and GHL setup</li>
+        </ul>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2">
+        <p class="project-company">Advik Technologies · USA Based SaaS</p>
+        <h3 class="project-role">Social Media &amp; Automation Executive</h3>
+        <p class="project-period">Jan – Feb 2026</p>
+        <ul class="project-bullets">
+          <li>Created and managed brand presence across 5 platforms</li>
+          <li>Produced 10+ promotional and short-form videos</li>
+          <li>Built end-to-end GHL automation pipeline — lead capture to 2-month follow-up sequences</li>
+          <li>Designed complete CRM workflow covering customer intake, nurturing, and conversion tracking</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="project-websites reveal reveal-delay-3">
+      <p class="websites-label">Website Design &amp; Deployment</p>
+      <div class="websites-grid">
+        <a class="website-item" href="https://www.redparrotaccounting.com" target="_blank" rel="noopener">
+          <div class="website-item-left">
+            <div class="website-item-name">Red Parrot Accounting Limited</div>
+            <div class="website-item-desc">UK based accounting firm</div>
+          </div>
+          <span class="website-item-arrow">↗</span>
+        </a>
+        <a class="website-item" href="https://www.clementinerecruitmentlondon.com" target="_blank" rel="noopener">
+          <div class="website-item-left">
+            <div class="website-item-name">Clementine Recruitment (London) Ltd</div>
+            <div class="website-item-desc">UK based recruitment company</div>
+          </div>
+          <span class="website-item-arrow">↗</span>
+        </a>
+        <a class="website-item" href="https://www.individualmind.co.uk" target="_blank" rel="noopener">
+          <div class="website-item-left">
+            <div class="website-item-name">Individual Minds Ltd</div>
+            <div class="website-item-desc">UK based technical &amp; vocational education</div>
+          </div>
+          <span class="website-item-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ QUALIFICATIONS ══ -->
 <section id="qualifications">
-  <div class="section-header reveal">
-    <span class="section-num">02</span>
-    <h2 class="section-title">Qualifications & Honours</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="qual-grid">
-    <div class="qual-card reveal">
-      <span class="qual-icon">🌐</span>
-      <div class="qual-name">International Certifications</div>
-      <div class="qual-desc">Globally recognised certifications in digital marketing, AI automation, and business strategy from leading international institutions.</div>
-      <div class="qual-tags"><span class="tag">Global</span><span class="tag">Certified</span></div>
-    </div>
-    <div class="qual-card reveal">
-      <span class="qual-icon">🏅</span>
-      <div class="qual-name">National Certifications</div>
-      <div class="qual-desc">Nationally accredited qualifications and professional certifications earned through recognised institutions across Nepal.</div>
-      <div class="qual-tags"><span class="tag">Nepal</span><span class="tag">Accredited</span></div>
-    </div>
-    <div class="qual-card reveal">
-      <span class="qual-icon">🎤</span>
-      <div class="qual-name">Toastmasters</div>
-      <div class="qual-desc">Active Toastmasters member — developing public speaking, leadership, and communication skills through structured programmes.</div>
-      <div class="qual-tags"><span class="tag">Speaking</span><span class="tag">Leadership</span></div>
-    </div>
-    <div class="qual-card reveal">
-      <span class="qual-icon">🏆</span>
-      <div class="qual-name">Leadership & Honors</div>
-      <div class="qual-desc">Vice President of Naya Bazar Dhimme Khala — recognised for leadership, community contribution, and professional excellence.</div>
-      <div class="qual-tags"><span class="tag">VP</span><span class="tag">Community</span><span class="tag">Honours</span></div>
+  <div class="section-inner">
+    <p class="section-tag reveal">02 — Recognition</p>
+    <h2 class="section-title reveal reveal-delay-1">Qualifications &amp; Honours</h2>
+    <p class="section-desc reveal reveal-delay-2">Certifications, leadership, and professional recognition earned across Nepal and globally.</p>
+
+    <div class="qual-grid">
+      <div class="qual-card reveal reveal-delay-1">
+        <div class="qual-icon">🌐</div>
+        <h3 class="qual-title">International Certifications</h3>
+        <p class="qual-desc">Globally recognised certifications in digital marketing, AI automation, and business strategy from leading international institutions.</p>
+        <div class="qual-tags">
+          <span class="qual-tag">Global</span>
+          <span class="qual-tag">Certified</span>
+        </div>
+      </div>
+      <div class="qual-card reveal reveal-delay-2">
+        <div class="qual-icon">🏅</div>
+        <h3 class="qual-title">National Certifications</h3>
+        <p class="qual-desc">Nationally accredited qualifications and professional certifications earned through recognised institutions across Nepal.</p>
+        <div class="qual-tags">
+          <span class="qual-tag">Nepal</span>
+          <span class="qual-tag">Accredited</span>
+        </div>
+      </div>
+      <div class="qual-card reveal reveal-delay-3">
+        <div class="qual-icon">🎤</div>
+        <h3 class="qual-title">Toastmasters</h3>
+        <p class="qual-desc">Active Toastmasters member — developing public speaking, leadership, and communication skills through structured programmes.</p>
+        <div class="qual-tags">
+          <span class="qual-tag">Speaking</span>
+          <span class="qual-tag">Leadership</span>
+        </div>
+      </div>
+      <div class="qual-card reveal reveal-delay-4">
+        <div class="qual-icon">🏆</div>
+        <h3 class="qual-title">Leadership &amp; Honors</h3>
+        <p class="qual-desc">Vice President of Naya Bazar Dhimme Khala — recognised for leadership, community contribution, and professional excellence.</p>
+        <div class="qual-tags">
+          <span class="qual-tag">VP</span>
+          <span class="qual-tag">Community</span>
+          <span class="qual-tag">Honours</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 03 PORTFOLIO -->
+<!-- ══ PORTFOLIO ══ -->
 <section id="portfolio">
-  <div class="section-header reveal">
-    <span class="section-num">03</span>
-    <h2 class="section-title">My Portfolio</h2>
-    <div class="section-line"></div>
-  </div>
-  <p class="portfolio-desc reveal">Where strategy meets execution — real work, real results, real adventures. Explore what I create, build, and chase.</p>
-  <div class="portfolio-grid">
-    <a href="video.html" class="port-card reveal">
-      <div class="port-card-img">
-        <div class="port-card-bg bg-video"></div>
-        <div class="port-card-glow glow-video"></div>
-        <div class="port-card-icon">🎬</div>
-      </div>
-      <div class="port-card-body">
-        <div class="port-card-label">// Showcase</div>
-        <div class="port-card-title">Video Portfolio</div>
-        <div class="port-card-desc">AI automation demos, GHL walkthroughs, campaigns and client results — all in video.</div>
-        <div class="port-card-arrow">View Videos →</div>
-      </div>
-    </a>
-    <a href="content.html" class="port-card reveal">
-      <div class="port-card-img">
-        <div class="port-card-bg bg-content"></div>
-        <div class="port-card-glow glow-content"></div>
-        <div class="port-card-icon">✍️</div>
-      </div>
-      <div class="port-card-body">
-        <div class="port-card-label">// Creative</div>
-        <div class="port-card-title">Content Portfolio</div>
-        <div class="port-card-desc">Social media content, ad creatives, copywriting and marketing materials that convert.</div>
-        <div class="port-card-arrow">View Content →</div>
-      </div>
-    </a>
-    <a href="adventure.html" class="port-card reveal">
-      <div class="port-card-img">
-        <div class="port-card-bg bg-adventure"></div>
-        <div class="port-card-glow glow-adventure"></div>
-        <div class="port-card-icon">🏔️</div>
-      </div>
-      <div class="port-card-body">
-        <div class="port-card-label">// Personal</div>
-        <div class="port-card-title">Adventure Portfolio</div>
-        <div class="port-card-desc">Treks, skydiving, rafting, canyoning — the side of me that chases the extraordinary.</div>
-        <div class="port-card-arrow">View Adventures →</div>
-      </div>
-    </a>
+  <div class="section-inner">
+    <p class="section-tag reveal">03 — My Portfolio</p>
+    <h2 class="section-title reveal reveal-delay-1">My Portfolio</h2>
+    <p class="section-desc reveal reveal-delay-2">Where strategy meets execution — real work, real results, real adventures.</p>
+
+    <div class="portfolio-grid">
+      <a class="portfolio-card reveal reveal-delay-1" href="video.html">
+        <div class="portfolio-thumb video">🎬</div>
+        <div class="portfolio-body">
+          <p class="portfolio-cat">// Showcase</p>
+          <h3 class="portfolio-name">Video Portfolio</h3>
+          <p class="portfolio-desc">AI automation demos, GHL walkthroughs, campaigns and client results — all in video.</p>
+          <span class="portfolio-link">View Videos →</span>
+        </div>
+      </a>
+      <a class="portfolio-card reveal reveal-delay-2" href="content.html">
+        <div class="portfolio-thumb content">✍️</div>
+        <div class="portfolio-body">
+          <p class="portfolio-cat">// Creative</p>
+          <h3 class="portfolio-name">Content Portfolio</h3>
+          <p class="portfolio-desc">Social media content, ad creatives, copywriting and marketing materials that convert.</p>
+          <span class="portfolio-link">View Content →</span>
+        </div>
+      </a>
+      <a class="portfolio-card reveal reveal-delay-3" href="adventure.html">
+        <div class="portfolio-thumb adventure">⛰️</div>
+        <div class="portfolio-body">
+          <p class="portfolio-cat">// Personal</p>
+          <h3 class="portfolio-name">Adventure Portfolio</h3>
+          <p class="portfolio-desc">Treks, skydiving, rafting, canyoning — the side of me that chases the extraordinary.</p>
+          <span class="portfolio-link">View Adventures →</span>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 
-<!-- 04 BLOG -->
+<!-- ══ BLOG ══ -->
 <section id="blog">
-  <div class="section-header reveal">
-    <span class="section-num">04</span>
-    <h2 class="section-title">Blog</h2>
-    <div class="section-line"></div>
-  </div>
-  <p class="blog-intro reveal">Real experiences, real results — I write about what I actually do, the tools I use, and the lessons I learn along the way.</p>
-  <div class="blog-grid">
-    <a href="blog1.html" class="blog-card reveal">
-      <div class="blog-card-top"></div>
-      <div class="blog-card-body">
-        <div class="blog-card-num">// 01 · Lead Generation</div>
-        <div class="blog-card-title">How I Generated 9 Leads in 9 Days for a UK Based Company</div>
-        <div class="blog-card-desc">The exact strategy, tools, and content approach I used to generate 9 warm qualified leads in just 9 days — no paid ads, just smart execution.</div>
-        <div class="blog-card-footer">
-          <span class="blog-card-tag">Marketing</span>
-          <span style="font-family:var(--mono);font-size:0.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;">Read More →</span>
+  <div class="section-inner">
+    <p class="section-tag reveal">04 — Insights</p>
+    <h2 class="section-title reveal reveal-delay-1">Blog</h2>
+    <p class="section-desc reveal reveal-delay-2">Real experiences, real results — I write about what I actually do, the tools I use, and the lessons I learn.</p>
+
+    <div class="blog-grid">
+      <a class="blog-card reveal reveal-delay-1" href="blog-9leads.html">
+        <p class="blog-num">// 01 · Lead Generation</p>
+        <p class="blog-cat">Marketing</p>
+        <h3 class="blog-title">How I Generated 9 Leads in 9 Days for a UK Based Company</h3>
+        <p class="blog-excerpt">The exact strategy, tools, and content approach I used to generate 9 warm qualified leads in just 9 days — no paid ads, just smart execution.</p>
+        <div class="blog-footer">
+          <span class="blog-tag">Marketing</span>
+          <span class="blog-read-more">Read More →</span>
         </div>
-      </div>
-    </a>
-    <a href="blog2.html" class="blog-card reveal">
-      <div class="blog-card-top"></div>
-      <div class="blog-card-body">
-        <div class="blog-card-num">// 02 · GHL Automation</div>
-        <div class="blog-card-title">How I Set Up GHL Automation for a UK Based SaaS Company to Track & Nurture Leads</div>
-        <div class="blog-card-desc">A full walkthrough of the Go High Level automation system I built — from lead capture to nurture sequences — and the results it delivered.</div>
-        <div class="blog-card-footer">
-          <span class="blog-card-tag">GHL · Automation</span>
-          <span style="font-family:var(--mono);font-size:0.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;">Read More →</span>
+      </a>
+      <a class="blog-card reveal reveal-delay-2" href="blog-ghl.html">
+        <p class="blog-num">// 02 · GHL Automation</p>
+        <p class="blog-cat">GHL · Automation</p>
+        <h3 class="blog-title">How I Set Up GHL Automation for a UK Based SaaS Company to Track &amp; Nurture Leads</h3>
+        <p class="blog-excerpt">A full walkthrough of the Go High Level automation system I built — from lead capture to nurture sequences — and the results it delivered.</p>
+        <div class="blog-footer">
+          <span class="blog-tag">GHL</span>
+          <span class="blog-read-more">Read More →</span>
         </div>
-      </div>
-    </a>
-    <a href="blog3.html" class="blog-card reveal">
-      <div class="blog-card-top"></div>
-      <div class="blog-card-body">
-        <div class="blog-card-num">// 03 · AI Achievement</div>
-        <div class="blog-card-title">Claude AI Agent Achievement for a UK Based Accounting Firm</div>
-        <div class="blog-card-desc">How a custom Claude AI agent I built cut a 2–3 hour daily manual task down to under 25 minutes — and what that meant for the team's productivity.</div>
-        <div class="blog-card-footer">
-          <span class="blog-card-tag">Claude AI · Agent</span>
-          <span style="font-family:var(--mono);font-size:0.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;">Read More →</span>
+      </a>
+      <a class="blog-card reveal reveal-delay-3" href="blog-ai-agent.html">
+        <p class="blog-num">// 03 · AI Achievement</p>
+        <p class="blog-cat">Claude AI · Agent</p>
+        <h3 class="blog-title">Claude AI Agent Achievement for a UK Based Accounting Firm</h3>
+        <p class="blog-excerpt">How a custom Claude AI agent I built cut a 2–3 hour daily manual task down to under 25 minutes — and what that meant for the team's productivity.</p>
+        <div class="blog-footer">
+          <span class="blog-tag">AI Agent</span>
+          <span class="blog-read-more">Read More →</span>
         </div>
-      </div>
-    </a>
-    <a href="blog4.html" class="blog-card reveal">
-      <div class="blog-card-top"></div>
-      <div class="blog-card-body">
-        <div class="blog-card-num">// 04 · AI Review</div>
-        <div class="blog-card-title">My Honest Review of the AI Tools I Use Every Day</div>
-        <div class="blog-card-desc">Claude, ChatGPT, and beyond — an honest, practical review of the AI tools I rely on daily for marketing, automation, and business growth.</div>
-        <div class="blog-card-footer">
-          <span class="blog-card-tag">AI · Tools · Review</span>
-          <span style="font-family:var(--mono);font-size:0.65rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;">Read More →</span>
+      </a>
+      <a class="blog-card reveal reveal-delay-4" href="blog-ai-review.html">
+        <p class="blog-num">// 04 · AI Review</p>
+        <p class="blog-cat">AI · Tools · Review</p>
+        <h3 class="blog-title">My Honest Review of the AI Tools I Use Every Day</h3>
+        <p class="blog-excerpt">Claude, ChatGPT, and beyond — an honest, practical review of the AI tools I rely on daily for marketing, automation, and business growth.</p>
+        <div class="blog-footer">
+          <span class="blog-tag">AI Tools</span>
+          <span class="blog-read-more">Read More →</span>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-socials">
-    <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" class="social-link" title="Instagram">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="https://wa.link/wjoxfp" target="_blank" class="social-link" title="WhatsApp">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-    </a>
-    <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" class="social-link" title="LinkedIn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-    </a>
-    <a href="/cdn-cgi/l/email-protection#422023283023212a23303b2331372c2c3b707702252f232b2e6c212d2f" class="social-link" title="Email">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    </a>
+  <div class="footer-inner">
+    <p class="footer-label">// Click to Connect</p>
+    <div class="footer-socials">
+      <a class="footer-social-btn" href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a class="footer-social-btn" href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a class="footer-social-btn" href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a class="footer-social-btn" href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email">
+        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+      </a>
+      <a class="footer-social-btn" href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+    </div>
+    <p class="footer-copy">© 2026 <span>Sunny Bajracharya</span> · Built from Nepal, for the world</p>
   </div>
-  <div class="footer-connect">// Click to Connect</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  const orb = document.getElementById('glowOrb');
-  document.addEventListener('mousemove', e => {
-    cursor.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
-    ring.style.transform = `translate(${e.clientX - 18}px, ${e.clientY - 18}px)`;
-    orb.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
-  });
-  const reveals = document.querySelectorAll('.reveal');
+<!-- ══ BLANK PAGES PLACEHOLDER FILES NEEDED ══ -->
+<!-- experience.html, portfolio.html, content.html, video.html, adventure.html, blog.html, qualifications.html, blog-9leads.html, blog-ghl.html, blog-ai-agent.html, blog-ai-review.html -->
+
+<script>
+  /* cursor */
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animateCursor() {
+    rx += (mx - rx) * 0.15;
+    ry += (my - ry) * 0.15;
+    dot.style.left = mx + 'px';
+    dot.style.top = my + 'px';
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  })();
+
+  /* scroll reveal */
   const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.01, rootMargin: '0px 0px -20px 0px' });
-  reveals.forEach(el => observer.observe(el));
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* hero elements visible immediately */
+  document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+
+  /* social popup toggle */
+  let socialOpen = false;
+  function toggleSocials() {
+    socialOpen = !socialOpen;
+    document.getElementById('socialPopup').classList.toggle('active', socialOpen);
+  }
+  document.addEventListener('click', e => {
+    if (socialOpen && !e.target.closest('#gitBtn') && !e.target.closest('#socialPopup')) {
+      socialOpen = false;
+      document.getElementById('socialPopup').classList.remove('active');
+    }
+  });
+
+  /* mobile nav toggle */
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
 </script>
+
 </body>
 </html>
