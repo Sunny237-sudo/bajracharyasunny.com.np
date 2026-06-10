@@ -237,13 +237,12 @@
 
     /* ── HERO BANNER ── */
     #hero-banner {
-      min-height: 100vh;
+      height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
       position: relative;
       z-index: 1;
-      padding-top: 68px;
       overflow: hidden;
     }
 
@@ -257,7 +256,7 @@
     }
 
     .banner-left {
-      padding: 60px 5% 60px 5%;
+      padding: 68px 3% 0 5%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -365,6 +364,7 @@
       height: 100vh;
       position: relative;
       overflow: hidden;
+      padding-left: 0;
     }
     .banner-right img {
       width: 100%;
@@ -384,9 +384,9 @@
     }
 
     @media (max-width: 900px) {
-      #hero-banner { grid-template-columns: 1fr; min-height: auto; }
+      #hero-banner { grid-template-columns: 1fr; height: auto; min-height: 100vh; }
       .banner-right { display: none; }
-      .banner-left { padding: 80px 5% 60px; }
+      .banner-left { padding: 100px 5% 60px; }
     }
 
     /* ── SECTION BASE ── */
