@@ -1,280 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Content Portfolio | Sunny Bajracharya</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#050a0f;--bg2:#080e16;--surface:#0d1a26;--border:#0f2a3f;
-    --cyan:#00e5ff;--green:#00ff9d;--orange:#ff6b35;
-    --text:#c8dde8;--text-dim:#5c7a8a;
-    --mono:'Share Tech Mono',monospace;--sans:'Outfit',sans-serif;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;cursor:none;}
-  .cursor{width:12px;height:12px;background:var(--cyan);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:screen;}
-  .cursor-ring{width:36px;height:36px;border:1px solid var(--cyan);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;opacity:0.4;}
-  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:999;}
-  .glow-orb{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.05) 0%,transparent 70%);pointer-events:none;z-index:0;top:-200px;left:-200px;transition:transform 1s ease;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Sunny Bajracharya</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080b10; --bg2: #0d1117; --bg3: #111720; --card: #0f1620;
+      --border: rgba(138, 75, 255, 0.15); --border-hover: rgba(138, 75, 255, 0.4);
+      --purple: #a855f7; --purple-dim: rgba(168, 85, 247, 0.12); --purple-glow: rgba(168, 85, 247, 0.3);
+      --text: #e8eaf0; --text-muted: #7a8394; --text-dim: #4a5568;
+      --font-display: 'Times New Roman', Times, serif; --font-body: 'Times New Roman', Times, serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.9; cursor: none; overflow-x: hidden; }
+    #cursor-dot { position: fixed; width: 8px; height: 8px; background: var(--purple); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
+    #cursor-ring { position: fixed; width: 32px; height: 32px; border: 1.5px solid rgba(168,85,247,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.12s ease; }
+    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 48px; height: 48px; border-color: var(--purple); background: rgba(168,85,247,0.06); }
+    body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:0.4; }
+    body::after { content:''; position:fixed; inset:0; background-image: linear-gradient(rgba(138,75,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(138,75,255,0.03) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; z-index:0; }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:0.1s; } .reveal-delay-2 { transition-delay:0.2s; } .reveal-delay-3 { transition-delay:0.3s; }
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(5,10,15,0.97),transparent);backdrop-filter:blur(6px);}
-  .nav-logo{font-family:var(--mono);color:var(--cyan);font-size:0.9rem;letter-spacing:2px;text-decoration:none;}
-  .nav-links{display:flex;gap:36px;list-style:none;align-items:center;}
-  .nav-links a{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color 0.2s;position:relative;}
-  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width 0.3s;}
-  .nav-links a:hover,.nav-links a.active{color:var(--cyan);}
-  .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-  .nav-dropdown{position:relative;}
-  .nav-dropdown-menu{position:absolute;top:calc(100% + 16px);left:0;background:var(--surface);border:1px solid var(--border);min-width:210px;opacity:0;pointer-events:none;transform:translateY(-8px);transition:all 0.2s;z-index:200;}
-  .nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:all;transform:translateY(0);}
-  .nav-dropdown-menu a{display:block;padding:12px 20px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:0.68rem;color:var(--text-dim);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:all 0.2s;}
-  .nav-dropdown-menu a:last-child{border-bottom:none;}
-  .nav-dropdown-menu a:hover{color:var(--cyan);background:rgba(0,229,255,0.04);padding-left:28px;}
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:1000; padding:0 5%; height:68px; display:flex; align-items:center; justify-content:space-between; background:rgba(8,11,16,0.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--text); text-decoration:none; letter-spacing:-0.5px; }
+    .nav-logo span { color:var(--purple); }
+    .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+    .nav-links a { color:var(--text-muted); text-decoration:none; font-size:15px; font-weight:400; padding:6px 14px; border-radius:6px; transition:color 0.2s,background 0.2s; letter-spacing:0.2px; }
+    .nav-links a:hover { color:var(--text); background:var(--purple-dim); }
+    .nav-links a.active { color:var(--purple); background:var(--purple-dim); }
+    .nav-dropdown { position:relative; }
+    .nav-dropdown > a::after { content:' ↓'; font-size:10px; opacity:0.6; }
+    .dropdown-menu { position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(-4px); background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px 6px 6px; min-width:200px; opacity:0; visibility:hidden; transition:all 0.2s ease; pointer-events:none; }
+    .dropdown-menu::before { content:''; position:absolute; top:-12px; left:0; right:0; height:12px; }
+    .nav-dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); pointer-events:all; }
+    .dropdown-menu a { display:block; padding:9px 14px; border-radius:6px; color:var(--text-muted); font-size:15px; text-decoration:none; transition:all 0.15s; }
+    .dropdown-menu a:hover { color:var(--purple); background:var(--purple-dim); }
+    .nav-toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+    .nav-toggle span { display:block; width:22px; height:2px; background:var(--text-muted); border-radius:2px; transition:all 0.3s; }
+    .mobile-nav { display:none; position:fixed; inset:68px 0 0 0; background:var(--bg2); z-index:999; padding:30px 5%; flex-direction:column; gap:4px; border-top:1px solid var(--border); }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a { color:var(--text-muted); text-decoration:none; font-size:16px; padding:12px 16px; border-radius:8px; transition:all 0.2s; }
+    .mobile-nav a:hover { color:var(--purple); background:var(--purple-dim); }
+    .mobile-nav-group { border-left:2px solid var(--border); margin-left:16px; }
+    .mobile-nav-group a { font-size:14px; color:var(--text-dim); }
+    @media (max-width:768px) { .nav-links { display:none; } .nav-toggle { display:flex; } }
 
-  /* PAGE HERO */
-  .page-hero{padding:140px 60px 60px;position:relative;z-index:1;border-bottom:1px solid var(--border);}
-  .page-hero-tag{font-family:var(--mono);font-size:0.8rem;color:var(--cyan);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;}
-  .page-hero-title{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;letter-spacing:-2px;line-height:1;}
-  .page-hero-title .accent{color:var(--cyan);}
-  .page-hero-sub{font-family:var(--mono);font-size:0.85rem;color:var(--text-dim);letter-spacing:2px;margin-top:14px;}
+    /* MAIN CONTENT AREA — placeholder */
+    .page-content { position:relative; z-index:1; min-height:calc(100vh - 68px); padding-top:68px; display:flex; align-items:center; justify-content:center; }
+    .coming-soon { text-align:center; }
+    .coming-tag { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--purple); border:1px solid var(--border); padding:6px 14px; border-radius:100px; margin-bottom:24px; background:var(--purple-dim); }
+    .coming-tag::before { content:''; width:6px; height:6px; background:var(--purple); border-radius:50%; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+    .coming-title { font-family:var(--font-display); font-size:clamp(36px,5vw,64px); font-weight:800; letter-spacing:-2px; color:var(--text); margin-bottom:16px; line-height:1.1; }
+    .coming-title span { color:var(--purple); }
+    .coming-desc { font-size:15.5px; color:var(--text-muted); max-width:480px; margin:0 auto; line-height:1.9; }
 
-  /* FILTERS */
-  .filters{padding:40px 60px 0;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;}
-  .filter-btn{font-family:var(--mono);font-size:0.68rem;padding:8px 18px;border:1px solid var(--border);color:var(--text-dim);background:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all 0.2s;}
-  .filter-btn:hover,.filter-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,0.04);}
-
-  /* CONTENT GRID */
-  section{position:relative;z-index:1;padding:50px 60px 100px;}
-  .content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
-  .content-card{border:1px solid var(--border);background:var(--surface);overflow:hidden;transition:all 0.3s;position:relative;}
-  .content-card:hover{border-color:rgba(0,229,255,0.3);transform:translateY(-4px);}
-  .content-thumb{height:200px;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-  .content-thumb img{width:100%;height:100%;object-fit:cover;display:none;transition:transform 0.4s;}
-  .content-card:hover .content-thumb img{transform:scale(1.04);}
-  .content-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:background 0.3s;position:relative;}
-  .content-placeholder:hover{filter:brightness(1.1);}
-  .content-placeholder::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50%,rgba(0,229,255,0.05),transparent 65%);}
-  .upload-icon{font-size:2rem;position:relative;z-index:1;}
-  .upload-text{font-family:var(--mono);font-size:0.62rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;}
-  .bg-social{background:linear-gradient(135deg,#0a1228,#120a28);}
-  .bg-ad{background:linear-gradient(135deg,#120a10,#1a0a08);}
-  .bg-copy{background:linear-gradient(135deg,#0a1218,#0a1828);}
-  .bg-email{background:linear-gradient(135deg,#0a1610,#102010);}
-  .content-type-badge{position:absolute;top:10px;left:10px;font-family:var(--mono);font-size:0.6rem;padding:4px 10px;background:rgba(0,0,0,0.75);letter-spacing:2px;text-transform:uppercase;z-index:2;}
-  .badge-social{color:var(--cyan);border:1px solid rgba(0,229,255,0.3);}
-  .badge-ad{color:var(--orange);border:1px solid rgba(255,107,53,0.3);}
-  .badge-copy{color:#b794f4;border:1px solid rgba(183,148,244,0.3);}
-  .badge-email{color:var(--green);border:1px solid rgba(0,255,157,0.3);}
-  .content-body{padding:20px 22px;}
-  .content-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:6px;}
-  .content-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.65;margin-bottom:12px;}
-  .content-tags{display:flex;gap:6px;flex-wrap:wrap;}
-  .tag{font-family:var(--mono);font-size:0.62rem;padding:4px 10px;border:1px solid var(--border);color:var(--cyan);letter-spacing:1px;text-transform:uppercase;}
-
-  /* FOOTER */
-  footer{padding:48px 60px;border-top:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:16px;position:relative;z-index:1;}
-  .footer-socials{display:flex;gap:14px;}
-  .social-link{width:42px;height:42px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.2s;text-decoration:none;color:var(--text-dim);}
-  .social-link:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-3px);}
-  .footer-connect{font-family:var(--mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:4px;text-transform:uppercase;}
-
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
-  .reveal.visible{opacity:1;transform:none;}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-  @media(max-width:768px){nav{padding:20px 24px;}.nav-links{display:none;}.page-hero,.filters,section{padding-left:24px;padding-right:24px;}footer{padding:40px 24px;}}
-</style>
+    /* FOOTER */
+    footer { position:relative; z-index:1; background:var(--bg2); border-top:1px solid var(--border); padding:60px 5% 40px; }
+    .footer-inner { max-width:1200px; margin:0 auto; text-align:center; }
+    .footer-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); margin-bottom:28px; }
+    .footer-socials { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:32px; }
+    .footer-social-btn { display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; background:var(--card); border:1px solid var(--border); color:var(--text-muted); text-decoration:none; transition:all 0.2s; }
+    .footer-social-btn:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-dim); transform:translateY(-3px); }
+    .footer-social-btn svg { width:18px; height:18px; fill:currentColor; }
+    .footer-copy { font-size:12px; color:var(--text-dim); }
+    .footer-copy span { color:var(--purple); }
+  </style>
 </head>
 <body>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="glow-orb" id="glowOrb"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
 <nav>
-  <a href="index.html" class="nav-logo">SUNNY BAJRACHARYA</a>
+  <a class="nav-logo" href="index.html">Sunny<span>.</span></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="experience.html">Work Experience</a></li>
     <li class="nav-dropdown">
-      <a href="#" class="active">Portfolio ▾</a>
-      <div class="nav-dropdown-menu">
+      <a href="portfolio.html" class="active">Portfolio</a>
+      <div class="dropdown-menu">
         <a href="content.html">Content Portfolio</a>
         <a href="video.html">Video Portfolio</a>
         <a href="adventure.html">Adventure Portfolio</a>
       </div>
     </li>
-    <li><a href="index.html#blog">Blogs</a></li>
-    <li><a href="index.html#qualifications">Qualifications & Honours</a></li>
+    <li><a href="blog.html">Blogs</a></li>
+    <li><a href="qualifications.html">Qualifications &amp; Honours</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-
-<div class="page-hero reveal">
-  <p class="page-hero-tag">// Portfolio → Content</p>
-  <h1 class="page-hero-title">Content <span class="accent">Portfolio</span></h1>
-  <p class="page-hero-sub">Social Media · Ad Creatives · Copywriting · Email</p>
-</div>
-
-<div class="filters reveal">
-  <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
-  <button class="filter-btn" onclick="filterCards('social',this)">Social Media</button>
-  <button class="filter-btn" onclick="filterCards('ad',this)">Ad Creatives</button>
-  <button class="filter-btn" onclick="filterCards('copy',this)">Copywriting</button>
-  <button class="filter-btn" onclick="filterCards('email',this)">Email</button>
-</div>
-
-<section>
-  <div class="content-grid">
-
-    <div class="content-card reveal" data-cat="social">
-      <div class="content-thumb" onclick="document.getElementById('c1').click()">
-        <div class="content-placeholder bg-social" id="cp1"><span class="upload-icon">📱</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg1" alt="">
-        <div class="content-type-badge badge-social">Social Media</div>
-        <input type="file" id="c1" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg1','cp1')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">LinkedIn Lead Generation Post</div>
-        <div class="content-desc">Organic LinkedIn content strategy that drove qualified inbound from target audience.</div>
-        <div class="content-tags"><span class="tag">LinkedIn</span><span class="tag">Organic</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="ad">
-      <div class="content-thumb" onclick="document.getElementById('c2').click()">
-        <div class="content-placeholder bg-ad" id="cp2"><span class="upload-icon">🎯</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg2" alt="">
-        <div class="content-type-badge badge-ad">Ad Creative</div>
-        <input type="file" id="c2" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg2','cp2')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">Facebook Ad Campaign</div>
-        <div class="content-desc">High-converting ad creative for an accounting services campaign targeting UK SMEs.</div>
-        <div class="content-tags"><span class="tag">Paid Ads</span><span class="tag">Facebook</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="copy">
-      <div class="content-thumb" onclick="document.getElementById('c3').click()">
-        <div class="content-placeholder bg-copy" id="cp3"><span class="upload-icon">✍️</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg3" alt="">
-        <div class="content-type-badge badge-copy">Copywriting</div>
-        <input type="file" id="c3" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg3','cp3')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">Landing Page Copy</div>
-        <div class="content-desc">Conversion-focused landing page copy written for a service business, A/B tested for performance.</div>
-        <div class="content-tags"><span class="tag">Copy</span><span class="tag">Landing Page</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="email">
-      <div class="content-thumb" onclick="document.getElementById('c4').click()">
-        <div class="content-placeholder bg-email" id="cp4"><span class="upload-icon">📧</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg4" alt="">
-        <div class="content-type-badge badge-email">Email</div>
-        <input type="file" id="c4" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg4','cp4')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">Email Nurture Sequence</div>
-        <div class="content-desc">Automated email nurture sequence built in GHL to convert leads from cold to close.</div>
-        <div class="content-tags"><span class="tag">Email</span><span class="tag">GHL</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="social">
-      <div class="content-thumb" onclick="document.getElementById('c5').click()">
-        <div class="content-placeholder bg-social" id="cp5"><span class="upload-icon">📸</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg5" alt="">
-        <div class="content-type-badge badge-social">Social Media</div>
-        <input type="file" id="c5" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg5','cp5')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">Instagram Carousel</div>
-        <div class="content-desc">Carousel posts and reels designed for engagement and brand awareness.</div>
-        <div class="content-tags"><span class="tag">Instagram</span><span class="tag">Reels</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="ad">
-      <div class="content-thumb" onclick="document.getElementById('c6').click()">
-        <div class="content-placeholder bg-ad" id="cp6"><span class="upload-icon">🚀</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg6" alt="">
-        <div class="content-type-badge badge-ad">Ad Creative</div>
-        <input type="file" id="c6" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg6','cp6')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">Google Display Ad</div>
-        <div class="content-desc">Display ad creative for a remarketing campaign targeting warm website visitors.</div>
-        <div class="content-tags"><span class="tag">Google Ads</span><span class="tag">Retargeting</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="copy">
-      <div class="content-thumb" onclick="document.getElementById('c7').click()">
-        <div class="content-placeholder bg-copy" id="cp7"><span class="upload-icon">📝</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg7" alt="">
-        <div class="content-type-badge badge-copy">Copywriting</div>
-        <input type="file" id="c7" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg7','cp7')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">SOP Documentation</div>
-        <div class="content-desc">Standard Operating Procedures written for Business, Marketing, Cold Call, Warm Call and SEO processes.</div>
-        <div class="content-tags"><span class="tag">SOP</span><span class="tag">Documentation</span></div>
-      </div>
-    </div>
-
-    <div class="content-card reveal" data-cat="social">
-      <div class="content-thumb" onclick="document.getElementById('c8').click()">
-        <div class="content-placeholder bg-social" id="cp8"><span class="upload-icon">🎬</span><span class="upload-text">Upload Image</span></div>
-        <img id="cimg8" alt="">
-        <div class="content-type-badge badge-social">Social Media</div>
-        <input type="file" id="c8" accept="image/*" style="display:none" onchange="uploadContent(this,'cimg8','cp8')">
-      </div>
-      <div class="content-body">
-        <div class="content-title">Podcast Video Edit</div>
-        <div class="content-desc">Edited 40-minute podcast videos down to 25 minutes — cutting unnecessary parts for social distribution.</div>
-        <div class="content-tags"><span class="tag">Video Edit</span><span class="tag">Podcast</span></div>
-      </div>
-    </div>
-
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="toggleMobileNav()">Home</a>
+  <a href="experience.html" onclick="toggleMobileNav()">Work Experience</a>
+  <a href="portfolio.html" onclick="toggleMobileNav()">Portfolio</a>
+  <div class="mobile-nav-group">
+    <a href="content.html" onclick="toggleMobileNav()">↳ Content Portfolio</a>
+    <a href="video.html" onclick="toggleMobileNav()">↳ Video Portfolio</a>
+    <a href="adventure.html" onclick="toggleMobileNav()">↳ Adventure Portfolio</a>
   </div>
-</section>
+  <a href="blog.html" onclick="toggleMobileNav()">Blogs</a>
+  <a href="qualifications.html" onclick="toggleMobileNav()">Qualifications &amp; Honours</a>
+</div>
+
+<div class="page-content">
+  <div class="coming-soon">
+    <div class="coming-tag reveal">03 — Portfolio</div>
+    <h1 class="coming-title reveal reveal-delay-1">My <span>Portfolio</span></h1>
+    <p class="coming-desc reveal reveal-delay-2">Content coming soon — check back shortly.</p>
+  </div>
+</div>
 
 <footer>
-  <div class="footer-socials">
-    <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-    <a href="https://wa.link/wjoxfp" target="_blank" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
-    <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-    <a href="mailto:bajracharyasunny25@gmail.com" class="social-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+  <div class="footer-inner">
+    <p class="footer-label">// Click to Connect</p>
+    <div class="footer-socials">
+      <a class="footer-social-btn" href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a class="footer-social-btn" href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      <a class="footer-social-btn" href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a class="footer-social-btn" href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+      <a class="footer-social-btn" href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    </div>
+    <p class="footer-copy">© 2026 <span>Sunny Bajracharya</span> · Built from Nepal, for the world</p>
   </div>
-  <div class="footer-connect">// Click to Connect</div>
 </footer>
 
 <script>
-  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing'),orb=document.getElementById('glowOrb');
-  document.addEventListener('mousemove',e=>{
-    cursor.style.transform=`translate(${e.clientX-6}px,${e.clientY-6}px)`;
-    ring.style.transform=`translate(${e.clientX-18}px,${e.clientY-18}px)`;
-    orb.style.transform=`translate(${e.clientX-300}px,${e.clientY-300}px)`;
-  });
-  const reveals=document.querySelectorAll('.reveal');
-  new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);} });},{threshold:0.01}).observe&&reveals.forEach(el=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.01}).observe(el));
-  function uploadContent(input,imgId,phId){
-    const file=input.files[0];if(!file)return;
-    const img=document.getElementById(imgId),ph=document.getElementById(phId);
-    img.src=URL.createObjectURL(file);img.style.display='block';ph.style.display='none';
-  }
-  function filterCards(cat,btn){
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.content-card').forEach(c=>{
-      c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
-    });
-  }
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function loop(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  document.querySelectorAll('.page-content .reveal').forEach(el=>el.classList.add('visible'));
+  function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');}
 </script>
 </body>
 </html>
