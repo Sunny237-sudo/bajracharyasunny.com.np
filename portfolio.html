@@ -9,28 +9,29 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #080b10; --bg2: #0d1117; --bg3: #111720; --card: #0f1620;
-      --border: rgba(138, 75, 255, 0.15); --border-hover: rgba(138, 75, 255, 0.4);
-      --purple: #a855f7; --purple-dim: rgba(168, 85, 247, 0.12); --purple-glow: rgba(168, 85, 247, 0.3);
+      --border: rgba(138,75,255,0.15); --border-hover: rgba(138,75,255,0.4);
+      --purple: #a855f7; --purple-dim: rgba(168,85,247,0.12); --purple-glow: rgba(168,85,247,0.3);
       --text: #e8eaf0; --text-muted: #7a8394; --text-dim: #4a5568;
       --font-display: 'Times New Roman', Times, serif; --font-body: 'Times New Roman', Times, serif;
     }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.9; cursor: none; overflow-x: hidden; }
-    #cursor-dot { position: fixed; width: 8px; height: 8px; background: var(--purple); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
-    #cursor-ring { position: fixed; width: 32px; height: 32px; border: 1.5px solid rgba(168,85,247,0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.12s ease; }
-    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 48px; height: 48px; border-color: var(--purple); background: rgba(168,85,247,0.06); }
+    html { scroll-behavior: auto; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.9; cursor: none; overflow: hidden; }
+
+    /* CURSOR */
+    #cursor-dot { position:fixed; width:8px; height:8px; background:var(--purple); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.1s ease; }
+    #cursor-ring { position:fixed; width:32px; height:32px; border:1.5px solid rgba(168,85,247,0.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all 0.12s ease; }
+    body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width:48px; height:48px; border-color:var(--purple); background:rgba(168,85,247,0.06); }
+
+    /* NOISE + GRID */
     body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:0.4; }
-    body::after { content:''; position:fixed; inset:0; background-image: linear-gradient(rgba(138,75,255,0.03) 1px,transparent 1px), linear-gradient(90deg,rgba(138,75,255,0.03) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; z-index:0; }
-    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.7s ease,transform 0.7s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-    .reveal-delay-1 { transition-delay:0.1s; } .reveal-delay-2 { transition-delay:0.2s; } .reveal-delay-3 { transition-delay:0.3s; }
+    body::after { content:''; position:fixed; inset:0; background-image:linear-gradient(rgba(138,75,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(138,75,255,0.03) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; z-index:0; }
 
     /* NAV */
     nav { position:fixed; top:0; left:0; right:0; z-index:1000; padding:0 5%; height:68px; display:flex; align-items:center; justify-content:space-between; background:rgba(8,11,16,0.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
     .nav-logo { font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--text); text-decoration:none; letter-spacing:-0.5px; }
     .nav-logo span { color:var(--purple); }
     .nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
-    .nav-links a { color:var(--text-muted); text-decoration:none; font-size:15px; font-weight:400; padding:6px 14px; border-radius:6px; transition:color 0.2s,background 0.2s; letter-spacing:0.2px; }
+    .nav-links a { color:var(--text-muted); text-decoration:none; font-size:15px; font-weight:400; padding:6px 14px; border-radius:6px; transition:color 0.2s,background 0.2s; }
     .nav-links a:hover { color:var(--text); background:var(--purple-dim); }
     .nav-links a.active { color:var(--purple); background:var(--purple-dim); }
     .nav-dropdown { position:relative; }
@@ -42,7 +43,7 @@
     .dropdown-menu a:hover { color:var(--purple); background:var(--purple-dim); }
     .nav-toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
     .nav-toggle span { display:block; width:22px; height:2px; background:var(--text-muted); border-radius:2px; transition:all 0.3s; }
-    .mobile-nav { display:none; position:fixed; inset:68px 0 0 0; background:var(--bg2); z-index:999; padding:30px 5%; flex-direction:column; gap:4px; border-top:1px solid var(--border); }
+    .mobile-nav { display:none; position:fixed; inset:68px 0 0 0; background:var(--bg2); z-index:999; padding:30px 5%; flex-direction:column; gap:4px; border-top:1px solid var(--border); overflow-y:auto; }
     .mobile-nav.open { display:flex; }
     .mobile-nav a { color:var(--text-muted); text-decoration:none; font-size:16px; padding:12px 16px; border-radius:8px; transition:all 0.2s; }
     .mobile-nav a:hover { color:var(--purple); background:var(--purple-dim); }
@@ -50,19 +51,173 @@
     .mobile-nav-group a { font-size:14px; color:var(--text-dim); }
     @media (max-width:768px) { .nav-links { display:none; } .nav-toggle { display:flex; } }
 
-    /* MAIN CONTENT AREA — placeholder */
-    .page-content { position:relative; z-index:1; min-height:calc(100vh - 68px); padding-top:68px; display:flex; align-items:center; justify-content:center; }
-    .coming-soon { text-align:center; }
-    .coming-tag { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--purple); border:1px solid var(--border); padding:6px 14px; border-radius:100px; margin-bottom:24px; background:var(--purple-dim); }
-    .coming-tag::before { content:''; width:6px; height:6px; background:var(--purple); border-radius:50%; animation:pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
-    .coming-title { font-family:var(--font-display); font-size:clamp(36px,5vw,64px); font-weight:800; letter-spacing:-2px; color:var(--text); margin-bottom:16px; line-height:1.1; }
-    .coming-title span { color:var(--purple); }
-    .coming-desc { font-size:15.5px; color:var(--text-muted); max-width:480px; margin:0 auto; line-height:1.9; }
+    /* ── SLIDE ENGINE ── */
+    #slider-wrapper { position:fixed; top:0; left:0; width:100%; height:100vh; transition:transform 0.8s cubic-bezier(0.77,0,0.175,1); will-change:transform; }
+    .slide { width:100%; height:100vh; position:relative; display:flex; align-items:center; overflow:hidden; }
 
-    /* FOOTER */
-    footer { position:relative; z-index:1; background:var(--bg2); border-top:1px solid var(--border); padding:60px 5% 40px; }
-    .footer-inner { max-width:1200px; margin:0 auto; text-align:center; }
+    /* ── NAV DOTS ── */
+    #nav-dots { position:fixed; left:28px; top:50%; transform:translateY(-50%); z-index:500; display:flex; flex-direction:column; gap:14px; }
+    .dot-item { position:relative; display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--text-dim); border:1px solid rgba(168,85,247,0.3); transition:all 0.3s; flex-shrink:0; }
+    .dot-item.active .dot { background:var(--purple); box-shadow:0 0 8px var(--purple-glow); transform:scale(1.3); }
+    .dot-label { position:absolute; left:22px; background:var(--card); border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:11px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); white-space:nowrap; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+    .dot-item:hover .dot-label { opacity:1; }
+    .dot-item:hover .dot { background:var(--purple); }
+    @media (max-width:768px) { #nav-dots { left:12px; } .dot-label { display:none; } }
+
+    /* ── SHARED SECTION STYLES ── */
+    .section-tag { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(--purple); border:1px solid var(--border); padding:5px 12px; border-radius:100px; background:var(--purple-dim); margin-bottom:18px; }
+    .section-tag::before { content:'//'; opacity:0.5; font-size:10px; }
+    .section-title { font-family:var(--font-display); font-size:clamp(26px,3.5vw,46px); font-weight:800; letter-spacing:-1.5px; color:var(--text); line-height:1.15; margin-bottom:14px; }
+    .section-title span { color:var(--purple); }
+    .section-summary { font-size:15px; color:var(--text-muted); line-height:1.85; margin-bottom:32px; max-width:520px; }
+
+    /* CTA BUTTONS */
+    .btn-primary { display:inline-flex; align-items:center; gap:10px; background:var(--purple); color:#fff; padding:12px 24px; border-radius:8px; font-size:14px; font-weight:500; text-decoration:none; border:none; cursor:none; transition:all 0.2s; letter-spacing:0.3px; }
+    .btn-primary:hover { background:#9333ea; transform:translateY(-2px); }
+    .btn-secondary { display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--text); padding:12px 24px; border-radius:8px; font-size:14px; font-weight:500; text-decoration:none; border:1px solid var(--border-hover); cursor:none; transition:all 0.2s; position:relative; }
+    .btn-secondary:hover { border-color:var(--purple); color:var(--purple); }
+    .cta-row { display:flex; gap:14px; flex-wrap:wrap; align-items:center; position:relative; }
+
+    /* SOCIAL POPUP */
+    .social-popup { position:absolute; bottom:calc(100% + 12px); left:0; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; display:flex; gap:12px; align-items:center; opacity:0; visibility:hidden; transform:translateY(8px); transition:all 0.25s ease; white-space:nowrap; z-index:200; }
+    .social-popup.active { opacity:1; visibility:visible; transform:translateY(0); }
+    .social-popup a { display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:8px; background:var(--bg3); border:1px solid var(--border); color:var(--text-muted); text-decoration:none; transition:all 0.2s; }
+    .social-popup a:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-dim); }
+    .social-popup a svg { width:18px; height:18px; fill:currentColor; }
+
+    /* ── SECTION 1 — 9 LEADS ── */
+    #slide-1 { background:var(--bg); padding:68px 5% 0; }
+    .s1-inner { max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+    .s1-left { position:relative; z-index:1; }
+    .s1-stats { display:flex; gap:24px; margin-bottom:28px; flex-wrap:wrap; }
+    .s1-stat { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 20px; text-align:center; }
+    .s1-stat-num { font-family:var(--font-display); font-size:26px; font-weight:800; color:var(--purple); line-height:1; }
+    .s1-stat-label { font-size:11px; color:var(--text-dim); letter-spacing:0.5px; margin-top:4px; }
+    .s1-right { position:relative; }
+    .s1-img-wrap { position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); }
+    .s1-img-wrap::before { content:''; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg,var(--purple),transparent 60%); z-index:0; }
+    .s1-img-wrap img { position:relative; z-index:1; width:100%; height:380px; object-fit:cover; border-radius:15px; display:block; }
+    @media (max-width:900px) { .s1-inner { grid-template-columns:1fr; gap:30px; } .s1-right { display:none; } }
+
+    /* ── SECTION 8 — BLOG STRIP ── */
+    #slide-8 { background:var(--bg2); padding:68px 5% 0; }
+    .s8-inner { max-width:1200px; margin:0 auto; width:100%; }
+    .blog-cards-row { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px; }
+    .mini-blog-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; text-decoration:none; transition:all 0.2s; display:block; position:relative; overflow:hidden; }
+    .mini-blog-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0; transition:opacity 0.3s; }
+    .mini-blog-card:nth-child(1)::before { background:#06b6d4; }
+    .mini-blog-card:nth-child(2)::before { background:#10b981; }
+    .mini-blog-card:nth-child(3)::before { background:#f59e0b; }
+    .mini-blog-card:hover { border-color:var(--border-hover); transform:translateY(-3px); }
+    .mini-blog-card:hover::before { opacity:1; }
+    .mini-blog-cat { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--purple); font-weight:600; margin-bottom:10px; }
+    .mini-blog-title { font-size:14px; font-weight:700; color:var(--text); line-height:1.6; margin-bottom:12px; }
+    .mini-blog-excerpt { font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:16px; }
+    .mini-blog-read { font-size:10px; color:var(--purple); letter-spacing:1.5px; text-transform:uppercase; }
+    @media (max-width:900px) { .blog-cards-row { grid-template-columns:1fr; gap:14px; } }
+
+    /* ── SECTION 2 — WEBSITES ── */
+    #slide-2 { background:var(--bg2); padding:68px 5% 0; }
+    .s2-inner { max-width:1200px; margin:0 auto; width:100%; }
+    .s2-header { margin-bottom:32px; }
+    .browser-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:32px; }
+    .browser-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:all 0.3s; }
+    .browser-card:hover { border-color:var(--border-hover); transform:translateY(-4px); }
+    .browser-bar { background:var(--bg3); padding:10px 14px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+    .browser-dots { display:flex; gap:5px; }
+    .browser-dot { width:9px; height:9px; border-radius:50%; }
+    .bd-red { background:#ff5f57; } .bd-yellow { background:#febc2e; } .bd-green { background:#28c840; }
+    .browser-url { flex:1; background:var(--bg); border-radius:4px; padding:3px 10px; font-size:10px; color:var(--text-dim); letter-spacing:0.3px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+    .browser-screen { height:180px; overflow:hidden; position:relative; }
+    .browser-screen img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; transition:transform 0.4s ease; }
+    .browser-card:hover .browser-screen img { transform:scale(1.04); }
+    .browser-info { padding:14px 16px; }
+    .browser-site-name { font-family:var(--font-display); font-size:14px; font-weight:700; color:var(--text); margin-bottom:3px; }
+    .browser-site-desc { font-size:12px; color:var(--text-dim); }
+    @media (max-width:900px) { .browser-grid { grid-template-columns:1fr; gap:14px; } .browser-screen { height:140px; } }
+
+    /* ── SECTION 3 — CONTENT ── */
+    #slide-3 { background:var(--bg); padding:68px 5% 0; }
+    .s3-inner { max-width:1200px; margin:0 auto; width:100%; }
+    .content-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:32px; }
+    .content-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:all 0.3s; position:relative; }
+    .content-card:hover { border-color:var(--border-hover); transform:translateY(-4px); }
+    .content-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:14px 14px 0 0; opacity:0; transition:opacity 0.3s; }
+    .content-card:nth-child(1)::before { background:var(--purple); }
+    .content-card:nth-child(2)::before { background:#06b6d4; }
+    .content-card:nth-child(3)::before { background:#10b981; }
+    .content-card:hover::before { opacity:1; }
+    .content-img { height:200px; overflow:hidden; }
+    .content-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; }
+    .content-card:hover .content-img img { transform:scale(1.05); }
+    .content-body { padding:18px 20px; }
+    .content-type { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--purple); font-weight:600; margin-bottom:6px; }
+    .content-name { font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; line-height:1.4; }
+    .content-desc { font-size:13px; color:var(--text-muted); line-height:1.7; }
+    @media (max-width:600px) { .content-grid { grid-template-columns:1fr; gap:12px; } .content-img { height:140px; } }
+
+    /* ── SECTION 4 — AI AGENT ── */
+    #slide-4 { background:var(--bg2); padding:68px 5% 0; }
+    .s4-inner { max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+    .s4-left { position:relative; z-index:1; }
+    .s4-metrics { display:flex; flex-direction:column; gap:16px; margin-bottom:28px; }
+    .s4-metric { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:16px; }
+    .s4-metric-icon { font-size:22px; flex-shrink:0; }
+    .s4-metric-text { font-size:14px; color:var(--text-muted); line-height:1.5; }
+    .s4-metric-text strong { color:var(--text); font-weight:700; }
+    /* AI Graphic */
+    .s4-right { display:flex; align-items:center; justify-content:center; }
+    .ai-graphic { width:100%; max-width:400px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:32px; position:relative; overflow:hidden; }
+    .ai-graphic::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(168,85,247,0.15) 0%,transparent 70%); }
+    .ai-graphic-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--purple); margin-bottom:24px; font-weight:500; }
+    .ai-compare { display:flex; flex-direction:column; gap:14px; }
+    .ai-bar-row { display:flex; flex-direction:column; gap:6px; }
+    .ai-bar-label { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); }
+    .ai-bar-label span:last-child { color:var(--text); font-weight:600; }
+    .ai-bar-track { height:10px; background:var(--bg3); border-radius:100px; overflow:hidden; }
+    .ai-bar-fill { height:100%; border-radius:100px; transition:width 1.5s ease; }
+    .ai-bar-fill.before { background:var(--text-dim); width:100%; }
+    .ai-bar-fill.after { background:linear-gradient(90deg,var(--purple),#7c3aed); width:28%; }
+    .ai-saving { margin-top:20px; background:rgba(168,85,247,0.08); border:1px solid var(--border); border-radius:10px; padding:14px 18px; text-align:center; }
+    .ai-saving-num { font-family:var(--font-display); font-size:28px; font-weight:800; color:var(--purple); line-height:1; }
+    .ai-saving-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+    @media (max-width:900px) { .s4-inner { grid-template-columns:1fr; gap:30px; } .s4-right { display:none; } }
+
+    /* ── SECTION 5 — USA VIDEO ── */
+    #slide-5 { background:var(--bg); padding:68px 5% 0; }
+    .s5-inner { max-width:1000px; margin:0 auto; width:100%; display:flex; flex-direction:column; align-items:center; text-align:center; height:100%; justify-content:center; padding-bottom:20px; }
+    .video-wrap { position:relative; width:100%; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:#000; margin-bottom:28px; }
+    .video-wrap iframe { width:100%; height:55vh; display:block; border:none; }
+    .unmute-btn { position:absolute; top:14px; right:14px; background:rgba(8,11,16,0.85); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:500; cursor:none; transition:all 0.2s; z-index:10; letter-spacing:0.5px; }
+    .unmute-btn:hover { border-color:var(--purple); color:var(--purple); }
+    @media (max-width:768px) { .video-wrap iframe { height:40vh; } }
+
+    /* ── SECTION 6 — NEPAL VIDEO ── */
+    #slide-6 { background:var(--bg2); padding:68px 5% 0; }
+    .s6-inner { max-width:1000px; margin:0 auto; width:100%; display:flex; flex-direction:column; align-items:center; text-align:center; height:100%; justify-content:center; padding-bottom:20px; }
+
+    /* ── SECTION 7 — ADVENTURE ── */
+    #slide-7 { background:var(--bg); padding:68px 5% 0; }
+    .s7-inner { max-width:1200px; margin:0 auto; width:100%; }
+    .s7-header { text-align:center; margin-bottom:32px; }
+    .s7-tagline { font-size:14px; color:var(--text-muted); font-style:italic; margin-top:8px; }
+    .adventure-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:28px; }
+    .adv-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:all 0.3s; position:relative; }
+    .adv-card:hover { border-color:var(--border-hover); transform:translateY(-5px); }
+    .adv-img { height:220px; overflow:hidden; position:relative; }
+    .adv-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease; filter:grayscale(10%) contrast(1.05); }
+    .adv-card:hover .adv-img img { transform:scale(1.06); filter:grayscale(0%) contrast(1.05); }
+    .adv-img::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(8,11,16,0.7) 0%,transparent 50%); }
+    .adv-body { padding:18px 20px; }
+    .adv-type { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--purple); font-weight:600; margin-bottom:6px; }
+    .adv-title { font-family:var(--font-display); font-size:16px; font-weight:800; color:var(--text); margin-bottom:8px; line-height:1.4; }
+    .adv-desc { font-size:13px; color:var(--text-muted); line-height:1.7; }
+    @media (max-width:600px) { .adventure-grid { grid-template-columns:1fr; gap:12px; } .adv-img { height:160px; } }
+
+    /* FOOTER SLIDE */
+    #slide-footer { background:var(--bg2); border-top:1px solid var(--border); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 5% 40px; }
+    .footer-inner { max-width:1200px; margin:0 auto; text-align:center; width:100%; }
     .footer-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dim); margin-bottom:28px; }
     .footer-socials { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:32px; }
     .footer-social-btn { display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; background:var(--card); border:1px solid var(--border); color:var(--text-muted); text-decoration:none; transition:all 0.2s; }
@@ -70,12 +225,20 @@
     .footer-social-btn svg { width:18px; height:18px; fill:currentColor; }
     .footer-copy { font-size:12px; color:var(--text-dim); }
     .footer-copy span { color:var(--purple); }
+
+    /* MOBILE overrides */
+    @media (max-width:768px) {
+      .s1-inner, .s4-inner { grid-template-columns:1fr; }
+      .s2-inner, .s3-inner, .s7-inner { padding:0; }
+      .section-title { font-size:clamp(22px,6vw,36px); }
+    }
   </style>
 </head>
 <body>
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 
+<!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html">Sunny<span>.</span></a>
   <ul class="nav-links">
@@ -109,38 +272,443 @@
   <a href="qualifications.html" onclick="toggleMobileNav()">Qualifications &amp; Honours</a>
 </div>
 
-<div class="page-content">
-  <div class="coming-soon">
-    <div class="coming-tag reveal">03 — Portfolio</div>
-    <h1 class="coming-title reveal reveal-delay-1">My <span>Portfolio</span></h1>
-    <p class="coming-desc reveal reveal-delay-2">Content coming soon — check back shortly.</p>
-  </div>
+<!-- NAV DOTS -->
+<div id="nav-dots">
+  <div class="dot-item active"><div class="dot"></div><div class="dot-label">9 Leads</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">Websites</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">Content</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">AI Agent</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">USA Video</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">Nepal Video</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">Adventure</div></div>
+  <div class="dot-item"><div class="dot"></div><div class="dot-label">Blog</div></div>
 </div>
 
-<footer>
-  <div class="footer-inner">
-    <p class="footer-label">// Click to Connect</p>
-    <div class="footer-socials">
-      <a class="footer-social-btn" href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-      <a class="footer-social-btn" href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-      <a class="footer-social-btn" href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-      <a class="footer-social-btn" href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
-      <a class="footer-social-btn" href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+<!-- SLIDER WRAPPER -->
+<div id="slider-wrapper">
+
+  <!-- ══ SLIDE 1 — 9 LEADS ══ -->
+  <div class="slide" id="slide-1">
+    <div class="s1-inner">
+      <div class="s1-left">
+        <div class="section-tag">01 — UK Based · Lead Generation</div>
+        <h2 class="section-title">9 Days. 9 Inbound Leads.<br>For a <span>UK Accounting Firm.</span></h2>
+        <p class="section-summary">No paid ads. No cold outreach budget. Just a focused organic content strategy that generated 9 warm, qualified inbound leads in 9 days — with 24.3K views, 12,255 unique viewers, and engagement ranking above the 75th percentile on Facebook.</p>
+        <div class="s1-stats">
+          <div class="s1-stat"><div class="s1-stat-num">9</div><div class="s1-stat-label">Leads in 9 Days</div></div>
+          <div class="s1-stat"><div class="s1-stat-num">24.3K</div><div class="s1-stat-label">Organic Views</div></div>
+          <div class="s1-stat"><div class="s1-stat-num">£0</div><div class="s1-stat-label">Ad Spend</div></div>
+        </div>
+        <div class="cta-row">
+          <a href="blog-9leads.html" class="btn-primary">Read the Full Story →</a>
+          <button class="btn-secondary" onclick="togglePopup('popup1')">
+            Get Your Leads Today
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="social-popup" id="popup1">
+            <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+            <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+            <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="s1-right">
+        <div class="s1-img-wrap">
+          <img src="9leads.png" alt="9 Leads Campaign Results" />
+        </div>
+      </div>
     </div>
-    <p class="footer-copy">© 2026 <span>Sunny Bajracharya</span> · Built from Nepal, for the world</p>
   </div>
-</footer>
+
+  <!-- ══ SLIDE 2 — WEBSITES ══ -->
+  <div class="slide" id="slide-2">
+    <div class="s2-inner">
+      <div class="s2-header">
+        <div class="section-tag">02 — UK Based · Web Development</div>
+        <h2 class="section-title">3 Websites Built for<br><span>UK Based Companies</span></h2>
+        <p class="section-summary">Designed and deployed from scratch on Wix — each site fully configured with SEO, analytics, custom domain, and mobile responsiveness. Averaging 5 days per site.</p>
+      </div>
+      <div class="browser-grid">
+        <div class="browser-card">
+          <div class="browser-bar">
+            <div class="browser-dots"><div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div></div>
+            <div class="browser-url">redparrotaccounting.com</div>
+          </div>
+          <div class="browser-screen"><img src="site-redparrot.png" alt="Red Parrot Accounting" /></div>
+          <div class="browser-info">
+            <div class="browser-site-name">Red Parrot Accounting Ltd</div>
+            <div class="browser-site-desc">UK based accounting &amp; tax firm</div>
+          </div>
+        </div>
+        <div class="browser-card">
+          <div class="browser-bar">
+            <div class="browser-dots"><div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div></div>
+            <div class="browser-url">clementinerecruitmentlondon.com</div>
+          </div>
+          <div class="browser-screen"><img src="site-clementine.png" alt="Clementine Recruitment" /></div>
+          <div class="browser-info">
+            <div class="browser-site-name">Clementine Recruitment London Ltd</div>
+            <div class="browser-site-desc">UK based recruitment company</div>
+          </div>
+        </div>
+        <div class="browser-card">
+          <div class="browser-bar">
+            <div class="browser-dots"><div class="browser-dot bd-red"></div><div class="browser-dot bd-yellow"></div><div class="browser-dot bd-green"></div></div>
+            <div class="browser-url">individualmind.co.uk</div>
+          </div>
+          <div class="browser-screen"><img src="site-individualmind.png" alt="Individual Minds" /></div>
+          <div class="browser-info">
+            <div class="browser-site-name">Individual Minds Ltd</div>
+            <div class="browser-site-desc">UK based technical &amp; vocational education</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button class="btn-primary" onclick="togglePopup('popup2')">
+          Let's Build Yours
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="social-popup" id="popup2">
+          <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 3 — CONTENT ══ -->
+  <div class="slide" id="slide-3">
+    <div class="s3-inner">
+      <div class="section-tag">03 — UK Based · Content Strategy</div>
+      <h2 class="section-title">Content Designed for a<br><span>UK Accounting Firm</span></h2>
+      <p class="section-summary">Three types of content that every business needs — educate, create urgency, and convert.</p>
+      <div class="content-grid">
+        <div class="content-card">
+          <div class="content-img"><img src="Details_on_Caption.jpg" alt="Informative Content" /></div>
+          <div class="content-body">
+            <div class="content-type">// Informative Content</div>
+            <div class="content-name">Educate Your Audience</div>
+            <div class="content-desc">Builds trust and authority by teaching your audience — informed clients are loyal clients.</div>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-img"><img src="Deadlines.jpg" alt="Threat Based Content" /></div>
+          <div class="content-body">
+            <div class="content-type">// Threat Based Content</div>
+            <div class="content-name">Deadlines &amp; Penalties</div>
+            <div class="content-desc">Creates urgency around tax deadlines and compliance — drives action before it's too late.</div>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="content-img"><img src="simplifying_Finance.jpg" alt="Promo Content" /></div>
+          <div class="content-body">
+            <div class="content-type">// Promo Content</div>
+            <div class="content-name">Showcase Your Services</div>
+            <div class="content-desc">Converts audience into clients by clearly showing what you offer and why they need it.</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a href="content-redparrot.html" class="btn-primary">View More Content →</a>
+        <button class="btn-secondary" onclick="togglePopup('popup3')">
+          Design Your Content
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="social-popup" id="popup3">
+          <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 4 — AI AGENT ══ -->
+  <div class="slide" id="slide-4">
+    <div class="s4-inner">
+      <div class="s4-left">
+        <div class="section-tag">04 — UK Based · AI Automation</div>
+        <h2 class="section-title">Claude AI Agent for a<br><span>UK Accounting Firm</span></h2>
+        <p class="section-summary">A custom Claude AI agent I built cut a 2–3 hour daily manual task down to under 25 minutes — saving the team over 85% of their time on a task they did every single day.</p>
+        <div class="s4-metrics">
+          <div class="s4-metric"><div class="s4-metric-icon">⏱️</div><div class="s4-metric-text"><strong>2–3 hours</strong> of manual daily work reduced to <strong>under 25 minutes</strong></div></div>
+          <div class="s4-metric"><div class="s4-metric-icon">🤖</div><div class="s4-metric-text">Built using <strong>Claude AI</strong> with smart prompt engineering and automation workflows</div></div>
+          <div class="s4-metric"><div class="s4-metric-icon">📈</div><div class="s4-metric-text"><strong>85%+ time saved</strong> — team redirected to higher-value client work</div></div>
+        </div>
+        <div class="cta-row">
+          <a href="blog-ai-agent.html" class="btn-primary">Learn More →</a>
+          <button class="btn-secondary" onclick="togglePopup('popup4')">
+            Save Hours with AI — Let's Talk
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="social-popup" id="popup4">
+            <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+            <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+            <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="s4-right">
+        <div class="ai-graphic">
+          <div class="ai-graphic-title">// Time Saved with AI Automation</div>
+          <div class="ai-compare">
+            <div class="ai-bar-row">
+              <div class="ai-bar-label"><span>Without AI</span><span>2–3 Hours</span></div>
+              <div class="ai-bar-track"><div class="ai-bar-fill before"></div></div>
+            </div>
+            <div class="ai-bar-row">
+              <div class="ai-bar-label"><span>With Claude AI</span><span>25 Minutes</span></div>
+              <div class="ai-bar-track"><div class="ai-bar-fill after"></div></div>
+            </div>
+          </div>
+          <div class="ai-saving">
+            <div class="ai-saving-num">85%+</div>
+            <div class="ai-saving-label">Time saved every single day</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 5 — USA VIDEO ══ -->
+  <div class="slide" id="slide-5">
+    <div class="s5-inner">
+      <div class="section-tag">05 — USA Based · Video Production</div>
+      <h2 class="section-title">Promo Video for a<br><span>USA Based SaaS Company</span></h2>
+      <p class="section-summary" style="max-width:600px;text-align:center;">Produced for Advik Technologies — a logistics SaaS company. Shot, edited and optimised for multi-platform distribution.</p>
+      <div class="video-wrap">
+        <!-- REPLACE src with your Vimeo embed URL e.g. https://player.vimeo.com/video/YOUR_VIDEO_ID?autoplay=1&muted=1 -->
+        <iframe id="vimeo5" src="https://player.vimeo.com/video/VIMEO_ID_HERE?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <button class="unmute-btn" id="unmuteBtn5" onclick="toggleMute('vimeo5','unmuteBtn5')">🔇 Click to Unmute</button>
+      </div>
+      <div class="cta-row" style="justify-content:center;">
+        <a href="content-advik.html" class="btn-primary">View More Content →</a>
+        <button class="btn-secondary" onclick="togglePopup('popup5')">
+          Let's Create Yours
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="social-popup" id="popup5">
+          <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 6 — NEPAL VIDEO ══ -->
+  <div class="slide" id="slide-6">
+    <div class="s6-inner">
+      <div class="section-tag">06 — Nepal Based · Video Production</div>
+      <h2 class="section-title">Promo Video for<br><span>Global Education &amp; HR</span></h2>
+      <p class="section-summary" style="max-width:600px;text-align:center;">Produced for Global Education &amp; HR, Kathmandu — showcasing their services and educational consulting expertise.</p>
+      <div class="video-wrap">
+        <!-- REPLACE src with your Vimeo embed URL -->
+        <iframe id="vimeo6" src="https://player.vimeo.com/video/VIMEO_ID_HERE?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <button class="unmute-btn" id="unmuteBtn6" onclick="toggleMute('vimeo6','unmuteBtn6')">🔇 Click to Unmute</button>
+      </div>
+      <div class="cta-row" style="justify-content:center;">
+        <a href="content-globaleducation.html" class="btn-primary">View More Content →</a>
+        <button class="btn-secondary" onclick="togglePopup('popup6')">
+          Let's Create Yours
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="social-popup" id="popup6">
+          <a href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 7 — ADVENTURE ══ -->
+  <div class="slide" id="slide-7">
+    <div class="s7-inner">
+      <div class="s7-header">
+        <div class="section-tag" style="margin:0 auto 14px;">07 — Personal · Adventure</div>
+        <h2 class="section-title" style="text-align:center;">My <span>Adventures</span></h2>
+        <p class="s7-tagline">"Because staring at screens all day wasn't enough of a thrill."</p>
+      </div>
+      <div class="adventure-grid">
+        <div class="adv-card">
+          <div class="adv-img"><img src="adventure-bungee.jpg" alt="Bungee Jumping" /></div>
+          <div class="adv-body">
+            <div class="adv-type">// Extreme Sports</div>
+            <div class="adv-title">Bungee Jump — World's 2nd Highest</div>
+            <div class="adv-desc">Took the leap at The Last Resort, Nepal — 160m above the Bhote Koshi river. One of the world's highest bungee jumps.</div>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-img"><img src="adventure-paragliding.jpg" alt="Paragliding" /></div>
+          <div class="adv-body">
+            <div class="adv-type">// Air Sports</div>
+            <div class="adv-title">Paragliding — Pokhara</div>
+            <div class="adv-desc">Soared above Phewa Lake in Pokhara — one of the world's best paragliding destinations with views of the Annapurna range.</div>
+          </div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-img"><img src="adventure-rafting.jpg" alt="White Water Rafting" /></div>
+          <div class="adv-body">
+            <div class="adv-type">// Water Sports</div>
+            <div class="adv-title">White Water Rafting — Nepal Rivers</div>
+            <div class="adv-desc">Navigated through Nepal's rapids — fast water, big drops, and the kind of adrenaline you can't get from a spreadsheet.</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-row" style="justify-content:center;">
+        <a href="adventure.html" class="btn-primary">Explore My Other Adventures →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 8 — BLOG ══ -->
+  <div class="slide" id="slide-8">
+    <div class="s8-inner">
+      <div class="section-tag">08 — From the Blog</div>
+      <h2 class="section-title">More <span>Insights</span></h2>
+      <p class="section-summary">Real experiences, real results — what I do, the tools I use, and the lessons I learn.</p>
+      <div class="blog-cards-row">
+        <a href="blog-ghl.html" class="mini-blog-card">
+          <div class="mini-blog-cat">GHL · Automation</div>
+          <div class="mini-blog-title">How I Set Up GHL Automation for a UK Based SaaS Company to Track &amp; Nurture Leads</div>
+          <div class="mini-blog-excerpt">A full walkthrough of the Go High Level automation system I built — from lead capture to nurture sequences — and the results it delivered.</div>
+          <div class="mini-blog-read">Read More →</div>
+        </a>
+        <a href="blog-ai-agent.html" class="mini-blog-card">
+          <div class="mini-blog-cat">Claude AI · Agent</div>
+          <div class="mini-blog-title">Claude AI Agent Achievement for a UK Based Accounting Firm</div>
+          <div class="mini-blog-excerpt">How a custom Claude AI agent I built cut a 2–3 hour daily manual task down to under 25 minutes — and what that meant for the team's productivity.</div>
+          <div class="mini-blog-read">Read More →</div>
+        </a>
+        <a href="blog-ai-review.html" class="mini-blog-card">
+          <div class="mini-blog-cat">AI · Tools · Review</div>
+          <div class="mini-blog-title">My Honest Review of the AI Tools I Use Every Day</div>
+          <div class="mini-blog-excerpt">Claude, ChatGPT, and beyond — an honest, practical review of the AI tools I rely on daily for marketing, automation, and business growth.</div>
+          <div class="mini-blog-read">Read More →</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER SLIDE ══ -->
+  <div class="slide" id="slide-footer">
+    <div class="footer-inner">
+      <p class="footer-label">// Click to Connect</p>
+      <div class="footer-socials">
+        <a class="footer-social-btn" href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a class="footer-social-btn" href="https://wa.link/owgm47" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a class="footer-social-btn" href="https://www.linkedin.com/in/sunny-bajracharya/" target="_blank" rel="noopener" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <a class="footer-social-btn" href="mailto:bajracharyasunny25@gmail.com" target="_blank" rel="noopener" title="Email"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg></a>
+        <a class="footer-social-btn" href="https://www.facebook.com/BAJRACHARYA77" target="_blank" rel="noopener" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      </div>
+      <p class="footer-copy">© 2026 <span>Sunny Bajracharya</span> · Built from Nepal, for the world</p>
+    </div>
+  </div>
+
+</div><!-- end slider-wrapper -->
 
 <script>
+  // ── CURSOR ──
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
   (function loop(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}}),{threshold:0.1});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-  document.querySelectorAll('.page-content .reveal').forEach(el=>el.classList.add('visible'));
-  function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');}
+
+  // ── SLIDE ENGINE ──
+  const TOTAL = 8;
+  let current = 0;
+  let isAnimating = false;
+  const wrapper = document.getElementById('slider-wrapper');
+  const dots = document.querySelectorAll('.dot-item');
+
+  function goToSlide(index) {
+    if (isAnimating) return;
+    index = Math.max(0, Math.min(index, TOTAL));
+    if (index === current) return;
+    isAnimating = true;
+    current = index;
+    wrapper.style.transform = `translateY(-${current * 100}vh)`;
+    dots.forEach((d,i) => d.classList.toggle('active', i === current));
+    document.getElementById('nav-dots').style.opacity = current === TOTAL ? '0' : '1';
+    setTimeout(() => { isAnimating = false; }, 850);
+  }
+
+  // ── WHEEL ──
+  let wheelTimer = null;
+  window.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (isAnimating) return;
+    if (wheelTimer) return;
+    wheelTimer = setTimeout(() => { wheelTimer = null; }, 900);
+    if (e.deltaY > 0) goToSlide(current + 1);
+    else goToSlide(current - 1);
+  }, { passive: false });
+
+  // ── TOUCH ──
+  let touchStartY = 0;
+  window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchend', e => {
+    const diff = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(diff) < 40) return;
+    if (diff > 0) goToSlide(current + 1);
+    else goToSlide(current - 1);
+  }, { passive: true });
+
+  // ── KEYBOARD ──
+  window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') goToSlide(current + 1);
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') goToSlide(current - 1);
+  });
+
+  // ── SOCIAL POPUPS ──
+  function togglePopup(id) {
+    const popup = document.getElementById(id);
+    const isActive = popup.classList.contains('active');
+    document.querySelectorAll('.social-popup').forEach(p => p.classList.remove('active'));
+    if (!isActive) popup.classList.add('active');
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.btn-secondary') && !e.target.closest('.social-popup')) {
+      document.querySelectorAll('.social-popup').forEach(p => p.classList.remove('active'));
+    }
+  });
+
+  // ── UNMUTE VIMEO ──
+  function toggleMute(iframeId, btnId) {
+    const iframe = document.getElementById(iframeId);
+    const btn = document.getElementById(btnId);
+    const src = iframe.src;
+    if (src.includes('muted=1')) {
+      iframe.src = src.replace('muted=1','muted=0');
+      btn.textContent = '🔊 Mute';
+    } else {
+      iframe.src = src.replace('muted=0','muted=1');
+      btn.textContent = '🔇 Click to Unmute';
+    }
+  }
+
+  // dot clicks
+  document.querySelectorAll('.dot-item').forEach((d, i) => {
+    d.addEventListener('click', () => goToSlide(i));
+  });
+
+  // ── MOBILE NAV ──
+  function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
 </script>
 </body>
 </html>
