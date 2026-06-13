@@ -100,22 +100,27 @@
     .s1-img-wrap img { position:relative; z-index:1; width:100%; height:380px; object-fit:cover; border-radius:15px; display:block; }
     @media (max-width:900px) { .s1-inner { grid-template-columns:1fr; gap:30px; } .s1-right { display:none; } }
 
-    /* ── SECTION 8 — BLOG STRIP ── */
-    #slide-8 { background:var(--bg2); padding:68px 5% 0; }
+    /* ── SLIDE 8 — BLOG + FOOTER COMBINED ── */
+    #slide-8 { background:var(--bg2); padding:68px 5% 0; display:flex; flex-direction:column; justify-content:center; }
     .s8-inner { max-width:1200px; margin:0 auto; width:100%; }
-    .blog-cards-row { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:32px; }
+    .blog-cards-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:28px; }
     .mini-blog-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; text-decoration:none; transition:all 0.2s; display:block; position:relative; overflow:hidden; }
     .mini-blog-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; opacity:0; transition:opacity 0.3s; }
-    .mini-blog-card:nth-child(1)::before { background:#06b6d4; }
-    .mini-blog-card:nth-child(2)::before { background:#10b981; }
-    .mini-blog-card:nth-child(3)::before { background:#f59e0b; }
+    .mini-blog-card:nth-child(1)::before { background:#a855f7; }
+    .mini-blog-card:nth-child(2)::before { background:#06b6d4; }
+    .mini-blog-card:nth-child(3)::before { background:#10b981; }
+    .mini-blog-card:nth-child(4)::before { background:#f59e0b; }
     .mini-blog-card:hover { border-color:var(--border-hover); transform:translateY(-3px); }
     .mini-blog-card:hover::before { opacity:1; }
+    .mini-blog-num { font-size:10px; letter-spacing:2px; color:var(--text-dim); font-weight:500; margin-bottom:10px; }
     .mini-blog-cat { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--purple); font-weight:600; margin-bottom:10px; }
     .mini-blog-title { font-size:14px; font-weight:700; color:var(--text); line-height:1.6; margin-bottom:12px; }
     .mini-blog-excerpt { font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:16px; }
+    .mini-blog-footer { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+    .mini-blog-tag { font-size:10px; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); border:1px solid var(--border); padding:3px 8px; border-radius:4px; }
     .mini-blog-read { font-size:10px; color:var(--purple); letter-spacing:1.5px; text-transform:uppercase; }
-    @media (max-width:900px) { .blog-cards-row { grid-template-columns:1fr; gap:14px; } }
+    @media (max-width:1000px) { .blog-cards-row { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:600px) { .blog-cards-row { grid-template-columns:1fr; } }
 
     /* ── SECTION 2 — WEBSITES ── */
     #slide-2 { background:var(--bg2); padding:68px 5% 0; }
@@ -575,38 +580,41 @@
     </div>
   </div>
 
-  <!-- ══ SLIDE 8 — BLOG ══ -->
+  <!-- ══ SLIDE 8 — BLOG + FOOTER COMBINED ══ -->
   <div class="slide" id="slide-8">
     <div class="s8-inner">
-      <div class="section-tag">08 — From the Blog</div>
-      <h2 class="section-title">More <span>Insights</span></h2>
-      <p class="section-summary">Real experiences, real results — what I do, the tools I use, and the lessons I learn.</p>
       <div class="blog-cards-row">
+        <a href="blog-9leads.html" class="mini-blog-card">
+          <div class="mini-blog-num">// 01 · Lead Generation</div>
+          <div class="mini-blog-cat">Marketing</div>
+          <div class="mini-blog-title">How I Generated 9 Leads in 9 Days for a UK Based Company</div>
+          <div class="mini-blog-excerpt">The exact strategy, tools, and content approach I used to generate 9 warm qualified leads in just 9 days — no paid ads, just smart execution.</div>
+          <div class="mini-blog-footer"><span class="mini-blog-tag">Marketing</span><span class="mini-blog-read">Read More →</span></div>
+        </a>
         <a href="blog-ghl.html" class="mini-blog-card">
+          <div class="mini-blog-num">// 02 · GHL Automation</div>
           <div class="mini-blog-cat">GHL · Automation</div>
           <div class="mini-blog-title">How I Set Up GHL Automation for a UK Based SaaS Company to Track &amp; Nurture Leads</div>
           <div class="mini-blog-excerpt">A full walkthrough of the Go High Level automation system I built — from lead capture to nurture sequences — and the results it delivered.</div>
-          <div class="mini-blog-read">Read More →</div>
+          <div class="mini-blog-footer"><span class="mini-blog-tag">GHL</span><span class="mini-blog-read">Read More →</span></div>
         </a>
         <a href="blog-ai-agent.html" class="mini-blog-card">
+          <div class="mini-blog-num">// 03 · AI Achievement</div>
           <div class="mini-blog-cat">Claude AI · Agent</div>
           <div class="mini-blog-title">Claude AI Agent Achievement for a UK Based Accounting Firm</div>
           <div class="mini-blog-excerpt">How a custom Claude AI agent I built cut a 2–3 hour daily manual task down to under 25 minutes — and what that meant for the team's productivity.</div>
-          <div class="mini-blog-read">Read More →</div>
+          <div class="mini-blog-footer"><span class="mini-blog-tag">AI Agent</span><span class="mini-blog-read">Read More →</span></div>
         </a>
         <a href="blog-ai-review.html" class="mini-blog-card">
+          <div class="mini-blog-num">// 04 · AI Review</div>
           <div class="mini-blog-cat">AI · Tools · Review</div>
           <div class="mini-blog-title">My Honest Review of the AI Tools I Use Every Day</div>
           <div class="mini-blog-excerpt">Claude, ChatGPT, and beyond — an honest, practical review of the AI tools I rely on daily for marketing, automation, and business growth.</div>
-          <div class="mini-blog-read">Read More →</div>
+          <div class="mini-blog-footer"><span class="mini-blog-tag">AI Tools</span><span class="mini-blog-read">Read More →</span></div>
         </a>
       </div>
     </div>
-  </div>
-
-  <!-- ══ FOOTER SLIDE ══ -->
-  <div class="slide" id="slide-footer">
-    <div class="footer-inner">
+    <div class="footer-inner" style="border-top:1px solid var(--border); margin-top:40px; padding-top:32px;">
       <p class="footer-label">// Click to Connect</p>
       <div class="footer-socials">
         <a class="footer-social-btn" href="https://www.instagram.com/bajracharya_sunny7/" target="_blank" rel="noopener" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
