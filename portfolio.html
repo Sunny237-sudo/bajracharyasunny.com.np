@@ -95,9 +95,19 @@
     .s1-stat-num { font-family:var(--font-display); font-size:26px; font-weight:800; color:var(--purple); line-height:1; }
     .s1-stat-label { font-size:11px; color:var(--text-dim); letter-spacing:0.5px; margin-top:4px; }
     .s1-right { position:relative; }
-    .s1-img-wrap { position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); }
+    .s1-img-wrap { position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); cursor:none; }
     .s1-img-wrap::before { content:''; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg,var(--purple),transparent 60%); z-index:0; }
-    .s1-img-wrap img { position:relative; z-index:1; width:100%; height:380px; object-fit:contain; background:#fff; border-radius:15px; display:block; }
+    .s1-img-wrap img { position:relative; z-index:1; width:100%; height:380px; object-fit:cover; object-position:top; border-radius:15px; display:block; transition:transform 0.3s ease; }
+    .s1-img-wrap:hover img { transform:scale(1.03); }
+    .s1-img-wrap .zoom-hint { position:absolute; bottom:12px; right:12px; z-index:2; background:rgba(8,11,16,0.75); border:1px solid var(--border); color:var(--text); font-size:11px; padding:6px 12px; border-radius:100px; display:flex; align-items:center; gap:6px; opacity:0; transition:opacity 0.25s; pointer-events:none; }
+    .s1-img-wrap:hover .zoom-hint { opacity:1; }
+
+    /* LIGHTBOX */
+    #lightbox-overlay { position:fixed; inset:0; background:rgba(5,7,10,0.92); z-index:5000; display:none; align-items:center; justify-content:center; padding:40px; cursor:none; }
+    #lightbox-overlay.active { display:flex; }
+    #lightbox-overlay img { max-width:92vw; max-height:88vh; border-radius:12px; box-shadow:0 0 60px rgba(168,85,247,0.25); object-fit:contain; }
+    .lightbox-close { position:absolute; top:24px; right:32px; width:44px; height:44px; border-radius:10px; background:var(--card); border:1px solid var(--border); color:var(--text); font-size:22px; display:flex; align-items:center; justify-content:center; cursor:none; transition:all 0.2s; z-index:5001; }
+    .lightbox-close:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-dim); }
     @media (max-width:900px) { .s1-inner { grid-template-columns:1fr; gap:30px; } .s1-right { display:none; } }
 
     /* ── SLIDE 8 — BLOG + FOOTER COMBINED ── */
@@ -250,6 +260,12 @@
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 
+<!-- LIGHTBOX -->
+<div id="lightbox-overlay" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">×</button>
+  <img id="lightbox-img" src="" alt="Enlarged view" onclick="event.stopPropagation()" />
+</div>
+
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html">Sunny<span>.</span></a>
@@ -327,8 +343,9 @@
         </div>
       </div>
       <div class="s1-right">
-        <div class="s1-img-wrap">
+        <div class="s1-img-wrap" onclick="openLightbox('9leads.png')">
           <img src="9leads.png" alt="9 Leads Campaign Results" />
+          <div class="zoom-hint">🔍 Click to enlarge</div>
         </div>
       </div>
     </div>
@@ -401,7 +418,7 @@
       <p class="section-summary">Three types of content that every business needs — educate, create urgency, and convert.</p>
       <div class="content-grid">
         <div class="content-card">
-          <div class="content-img"><img src="Details_on_Caption.jpg" alt="Informative Content" /></div>
+          <div class="content-img"><img src="Details on Caption.jpg" alt="Informative Content" /></div>
           <div class="content-body">
             <div class="content-type">// Informative Content</div>
             <div class="content-name">Educate Your Audience</div>
@@ -417,7 +434,7 @@
           </div>
         </div>
         <div class="content-card">
-          <div class="content-img"><img src="simplifying_Finance.jpg" alt="Promo Content" /></div>
+          <div class="content-img"><img src="simplifying Finance.jpg" alt="Promo Content" /></div>
           <div class="content-body">
             <div class="content-type">// Promo Content</div>
             <div class="content-name">Showcase Your Services</div>
@@ -499,7 +516,7 @@
       <p class="section-summary" style="max-width:600px;text-align:center;">Produced for Advik Technologies — a logistics SaaS company. Shot, edited and optimised for multi-platform distribution.</p>
       <div class="video-wrap">
         <!-- REPLACE src with your Vimeo embed URL e.g. https://player.vimeo.com/video/YOUR_VIDEO_ID?autoplay=1&muted=1 -->
-        <iframe id="vimeo5" src="https://player.vimeo.com/video/1199980321?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="vimeo5" data-src="https://player.vimeo.com/video/1199980321?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         <button class="unmute-btn" id="unmuteBtn5" onclick="toggleMute('vimeo5','unmuteBtn5')">🔇 Click to Unmute</button>
       </div>
       <div class="cta-row" style="justify-content:center;">
@@ -527,7 +544,7 @@
       <p class="section-summary" style="max-width:600px;text-align:center;">Produced for Global Education &amp; HR, Kathmandu — showcasing their services and educational consulting expertise.</p>
       <div class="video-wrap">
         <!-- REPLACE src with your Vimeo embed URL -->
-        <iframe id="vimeo6" src="https://player.vimeo.com/video/1199981811?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="vimeo6" data-src="https://player.vimeo.com/video/1199981811?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         <button class="unmute-btn" id="unmuteBtn6" onclick="toggleMute('vimeo6','unmuteBtn6')">🔇 Click to Unmute</button>
       </div>
       <div class="cta-row" style="justify-content:center;">
@@ -565,7 +582,7 @@
           </div>
         </div>
         <div class="adv-card">
-          <div class="adv-img"><img src="adventure-paragliding.jpg" alt="Paragliding" /></div>
+          <div class="adv-img"><img src="adventure-paragliding.jpeg" alt="Paragliding" /></div>
           <div class="adv-body">
             <div class="adv-type">// Air Sports</div>
             <div class="adv-title">Paragliding — Pokhara</div>
@@ -573,7 +590,7 @@
           </div>
         </div>
         <div class="adv-card">
-          <div class="adv-img"><img src="adventure-rafting.jpg" alt="White Water Rafting" /></div>
+          <div class="adv-img"><img src="adventure-rafting.jpeg" alt="White Water Rafting" /></div>
           <div class="adv-body">
             <div class="adv-type">// Water Sports</div>
             <div class="adv-title">White Water Rafting — Nepal Rivers</div>
@@ -654,6 +671,20 @@
 
   function isMobile() { return window.innerWidth <= 768; }
 
+  function loadVideoIfNeeded(slideIndex) {
+    // slide-5 is index 4 (vimeo5), slide-6 is index 5 (vimeo6)
+    const map = { 4: 'vimeo5', 5: 'vimeo6' };
+    Object.keys(map).forEach(idx => {
+      const iframe = document.getElementById(map[idx]);
+      if (!iframe) return;
+      if (parseInt(idx) === slideIndex) {
+        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
+      } else {
+        if (iframe.src) { iframe.src = ''; }
+      }
+    });
+  }
+
   function goToSlide(index) {
     if (isMobile()) return;
     if (isAnimating) return;
@@ -664,6 +695,7 @@
     wrapper.style.transform = `translateY(-${current * 100}vh)`;
     dots.forEach((d,i) => d.classList.toggle('active', i === current));
     document.getElementById('nav-dots').style.opacity = current === TOTAL - 1 ? '0' : '1';
+    loadVideoIfNeeded(current);
     setTimeout(() => { isAnimating = false; }, 850);
   }
 
@@ -728,6 +760,31 @@
   document.querySelectorAll('.dot-item').forEach((d, i) => {
     d.addEventListener('click', () => goToSlide(i));
   });
+
+  // ── LIGHTBOX ──
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-overlay').classList.add('active');
+  }
+  function closeLightbox(e) {
+    document.getElementById('lightbox-overlay').classList.remove('active');
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // ── VIDEO LAZY LOAD VIA INTERSECTION (covers mobile normal-scroll mode) ──
+  const videoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const iframe = entry.target;
+      if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
+      } else if (isMobile() && iframe.src) {
+        iframe.src = '';
+      }
+    });
+  }, { threshold: [0, 0.6] });
+  document.querySelectorAll('#vimeo5, #vimeo6').forEach(el => videoObserver.observe(el));
 
   // ── MOBILE NAV ──
   function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
