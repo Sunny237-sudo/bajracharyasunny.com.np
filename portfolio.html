@@ -202,11 +202,15 @@
     /* ── SECTION 5 — USA VIDEO ── */
     #slide-5 { background:var(--bg); padding:68px 5% 0; }
     .s5-inner { max-width:1000px; margin:0 auto; width:100%; display:flex; flex-direction:column; align-items:center; text-align:center; height:100%; justify-content:center; padding-bottom:20px; }
-    .video-wrap { position:relative; width:100%; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:#000; margin-bottom:28px; }
-    .video-wrap iframe { width:100%; height:55vh; display:block; border:none; }
-    .unmute-btn { position:absolute; top:14px; right:14px; background:rgba(8,11,16,0.85); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:7px 14px; font-size:12px; font-weight:500; cursor:none; transition:all 0.2s; z-index:10; letter-spacing:0.5px; }
-    .unmute-btn:hover { border-color:var(--purple); color:var(--purple); }
-    @media (max-width:768px) { .video-wrap iframe { height:40vh; } }
+    .video-wrap { position:relative; width:100%; height:55vh; border-radius:14px; overflow:hidden; border:1px solid var(--border); background:#000; margin-bottom:28px; cursor:none; }
+    .video-wrap iframe { width:100%; height:100%; display:block; border:none; }
+    .video-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+    .video-thumb-overlay { position:absolute; inset:0; background:rgba(8,11,16,0.35); display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+    .video-wrap:hover .video-thumb-overlay { background:rgba(8,11,16,0.5); }
+    .video-play-btn { width:76px; height:76px; border-radius:50%; background:rgba(168,85,247,0.9); border:2px solid rgba(255,255,255,0.6); display:flex; align-items:center; justify-content:center; transition:all 0.25s; box-shadow:0 0 30px rgba(168,85,247,0.5); }
+    .video-wrap:hover .video-play-btn { background:var(--purple); transform:scale(1.08); }
+    .video-play-btn svg { width:28px; height:28px; fill:#fff; margin-left:3px; }
+    @media (max-width:768px) { .video-wrap { height:40vh; } }
 
     /* ── SECTION 6 — NEPAL VIDEO ── */
     #slide-6 { background:var(--bg2); padding:68px 5% 0; }
@@ -514,10 +518,11 @@
       <div class="section-tag">05 — USA Based · Video Production</div>
       <h2 class="section-title">Promo Video for a<br><span>USA Based SaaS Company</span></h2>
       <p class="section-summary" style="max-width:600px;text-align:center;">Produced for Advik Technologies — a logistics SaaS company. Shot, edited and optimised for multi-platform distribution.</p>
-      <div class="video-wrap">
-        <!-- REPLACE src with your Vimeo embed URL e.g. https://player.vimeo.com/video/YOUR_VIDEO_ID?autoplay=1&muted=1 -->
-        <iframe id="vimeo5" data-src="https://player.vimeo.com/video/1199980321?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        <button class="unmute-btn" id="unmuteBtn5" onclick="toggleMute('vimeo5','unmuteBtn5')">🔇 Click to Unmute</button>
+      <div class="video-wrap" id="videoWrap5" onclick="playVideo('vimeo5','1199980321','videoWrap5')">
+        <img class="video-thumb" id="videoThumb5" src="" alt="USA SaaS Promo Video Thumbnail" />
+        <div class="video-thumb-overlay" id="videoOverlay5">
+          <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
       </div>
       <div class="cta-row" style="justify-content:center;">
         <a href="content-advik.html" class="btn-primary">View More Content →</a>
@@ -542,10 +547,11 @@
       <div class="section-tag">06 — Nepal Based · Video Production</div>
       <h2 class="section-title">Promo Video for<br><span>Global Education &amp; HR</span></h2>
       <p class="section-summary" style="max-width:600px;text-align:center;">Produced for Global Education &amp; HR, Kathmandu — showcasing their services and educational consulting expertise.</p>
-      <div class="video-wrap">
-        <!-- REPLACE src with your Vimeo embed URL -->
-        <iframe id="vimeo6" data-src="https://player.vimeo.com/video/1199981811?autoplay=1&muted=1&loop=0&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        <button class="unmute-btn" id="unmuteBtn6" onclick="toggleMute('vimeo6','unmuteBtn6')">🔇 Click to Unmute</button>
+      <div class="video-wrap" id="videoWrap6" onclick="playVideo('vimeo6','1199981811','videoWrap6')">
+        <img class="video-thumb" id="videoThumb6" src="" alt="Global Education & HR Promo Video Thumbnail" />
+        <div class="video-thumb-overlay" id="videoOverlay6">
+          <div class="video-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
       </div>
       <div class="cta-row" style="justify-content:center;">
         <a href="content-globaleducation.html" class="btn-primary">View More Content →</a>
@@ -671,20 +677,6 @@
 
   function isMobile() { return window.innerWidth <= 768; }
 
-  function loadVideoIfNeeded(slideIndex) {
-    // slide-5 is index 4 (vimeo5), slide-6 is index 5 (vimeo6)
-    const map = { 4: 'vimeo5', 5: 'vimeo6' };
-    Object.keys(map).forEach(idx => {
-      const iframe = document.getElementById(map[idx]);
-      if (!iframe) return;
-      if (parseInt(idx) === slideIndex) {
-        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
-      } else {
-        if (iframe.src) { iframe.src = ''; }
-      }
-    });
-  }
-
   function goToSlide(index) {
     if (isMobile()) return;
     if (isAnimating) return;
@@ -695,7 +687,6 @@
     wrapper.style.transform = `translateY(-${current * 100}vh)`;
     dots.forEach((d,i) => d.classList.toggle('active', i === current));
     document.getElementById('nav-dots').style.opacity = current === TOTAL - 1 ? '0' : '1';
-    loadVideoIfNeeded(current);
     setTimeout(() => { isAnimating = false; }, 850);
   }
 
@@ -742,18 +733,35 @@
     }
   });
 
-  // ── UNMUTE VIMEO ──
-  function toggleMute(iframeId, btnId) {
-    const iframe = document.getElementById(iframeId);
-    const btn = document.getElementById(btnId);
-    const src = iframe.src;
-    if (src.includes('muted=1')) {
-      iframe.src = src.replace('muted=1','muted=0');
-      btn.textContent = '🔊 Mute';
-    } else {
-      iframe.src = src.replace('muted=0','muted=1');
-      btn.textContent = '🔇 Click to Unmute';
-    }
+  // ── VIDEO THUMBNAILS + CLICK TO PLAY ──
+  function loadVimeoThumb(videoId, imgElId) {
+    fetch(`https://vimeo.com/api/v2/video/${videoId}.json`)
+      .then(res => res.json())
+      .then(data => {
+        const thumb = data[0].thumbnail_large || data[0].thumbnail_medium;
+        document.getElementById(imgElId).src = thumb;
+      })
+      .catch(() => {
+        // fallback thumbnail via oEmbed if api/v2 blocked
+        fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`)
+          .then(res => res.json())
+          .then(data => { document.getElementById(imgElId).src = data.thumbnail_url; })
+          .catch(() => {});
+      });
+  }
+  loadVimeoThumb('1199980321', 'videoThumb5');
+  loadVimeoThumb('1199981811', 'videoThumb6');
+
+  function playVideo(iframeId, videoId, wrapId) {
+    const wrap = document.getElementById(wrapId);
+    const iframe = document.createElement('iframe');
+    iframe.id = iframeId;
+    iframe.src = `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`;
+    iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+    iframe.allowFullscreen = true;
+    wrap.innerHTML = '';
+    wrap.appendChild(iframe);
+    wrap.onclick = null;
   }
 
   // dot clicks
@@ -772,19 +780,6 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox();
   });
-
-  // ── VIDEO LAZY LOAD VIA INTERSECTION (covers mobile normal-scroll mode) ──
-  const videoObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const iframe = entry.target;
-      if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-        if (!iframe.src && iframe.dataset.src) iframe.src = iframe.dataset.src;
-      } else if (isMobile() && iframe.src) {
-        iframe.src = '';
-      }
-    });
-  }, { threshold: [0, 0.6] });
-  document.querySelectorAll('#vimeo5, #vimeo6').forEach(el => videoObserver.observe(el));
 
   // ── MOBILE NAV ──
   function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
